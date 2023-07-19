@@ -47,7 +47,7 @@ public function getOrdersData123($id = null)
 	public function getOrdersDataCurrentUser($id = null)
 	{
 		if($id) {
-			$sql = "SELECT * FROM orders_item WHERE id = ?";
+			$sql = "SELECT * FROM orders_item WHERE order_id = ?";
 			$query = $this->db->query($sql, array($id));
 			return $query->row_array();
 		}
@@ -61,7 +61,7 @@ public function getOrdersData123($id = null)
 // $timestamp = strtotime($dateString);
 // $reversedDateString = date("Y-m-d H:i:s", $timestamp);
 
-		$sql = "SELECT * FROM orders_item WHERE date_time BETWEEN '".$unixTimeStart."' AND '".$currentTime."' AND Staff = '".$currentUser."' ORDER BY id DESC";
+		$sql = "SELECT * FROM orders_item WHERE date_time BETWEEN '".$unixTimeStart."' AND '".$currentTime."' AND Staff = '".$currentUser."' ORDER BY order_id ASC";
 		$query = $this->db->query($sql);
 		return $query->result_array();
 	}
@@ -128,7 +128,7 @@ public function getOrdersData123($id = null)
 
 
 		$user_id = $this->session->userdata('id');
-		$link = mysqli_connect("localhost","root","bmwarecorp","stock");
+		$link = mysqli_connect("localhost","root","","stock");
 $selectedname=$this->input->post('custdetails');
 $sql = "SELECT * FROM customer WHERE fullname='$selectedname'";
 
@@ -153,7 +153,7 @@ $currentDate = date('Y/m/d h:i:s'); // Get the current date in the format: Year-
 $timestamp = strtotime($currentDate);
 
 // $today = strtotime($todays_date,"-14 hours");
-		$bill_no = 'BILPR-'.strtoupper(substr(md5(uniqid(mt_rand(), true)), 0, 4));
+		$bill_no = 'TRANSNO-'.strtoupper(substr(md5(uniqid(mt_rand(), true)), 0, 4));
     	$data = array(
     		'bill_no' => $bill_no,
     		'customer_name' => $fullname,
@@ -183,6 +183,7 @@ mysqli_close($link);
     	for($x = 0; $x < $count_product; $x++) {
     		$product_name = $this->model_orders->getProductName($this->input->post('product')[$x]);
     		$items = array(
+				'id' => $x+1,
     			'order_id' => $order_id,
     			'product_id' => $this->input->post('product')[$x],
     			'qty' => $this->input->post('qty')[$x],
@@ -362,16 +363,25 @@ $sql3 = "UPDATE machine SET `prod_qty`=prod_qty+$newval WHERE prod_id='$test'";
 			// now remove the order item data 
 			$this->db->where('order_id', $id);
 			$this->db->delete('orders_item');
+			date_default_timezone_set('Asia/Manila');
+$currentDate2 = date('Y/m/d h:i:s'); // Get the current date in the format: Year-Month-Day
+$timestamp2 = strtotime($currentDate2);
 
 			// now decrease the product qty
 			$count_product = count($this->input->post('product'));
+			
 	    	for($x = 0; $x < $count_product; $x++) {
+				$product_name = $this->model_orders->getProductName($this->input->post('product')[$x]);
 	    		$items = array(
-	    			'order_id' => $id,
-	    			'product_id' => $this->input->post('product')[$x],
-	    			'qty' => $this->input->post('qty')[$x],
-	    			'rate' => $this->input->post('rate_value')[$x],
-	    			'amount' => $this->input->post('amount_value')[$x],
+					'id' => $x+1,
+    			'order_id' => $id,
+    			'product_id' => $this->input->post('product')[$x],
+    			'qty' => $this->input->post('qty')[$x],
+    			'rate' => $this->input->post('rate_value')[$x],
+    			'amount' => $this->input->post('amount_value')[$x],
+    			'Staff' => $_SESSION['username'],
+    			'date_time' => $timestamp2,
+    			'product_name' => $product_name['name']
 	    		
 
     			
@@ -418,7 +428,7 @@ $sql3 = "UPDATE machine SET `prod_qty`=prod_qty+$newval WHERE prod_id='$test'";
 	}
 
 	public function test($productId, $qtyBack) {
-		$link = mysqli_connect("localhost","root","bmwarecorp","stock");
+		$link = mysqli_connect("localhost","root","","stock");
 $sql = "UPDATE products SET `qty`=qty+$qtyBack AND `qty_used` = qty_used-$qtyBack WHERE product_id ='$productId'"; 
 mysqli_query($link,$sql);
 	}

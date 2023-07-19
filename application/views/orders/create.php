@@ -153,7 +153,7 @@ mysqli_close($conn); // Close connection
                     <div class="text-center">
         <?php
 
-$link = mysqli_connect("localhost","root","bmwarecorp","stock");
+$link = mysqli_connect("localhost","root","","stock");
 
 $sql = "SELECT * FROM customer ORDER BY fullname ASC";
 

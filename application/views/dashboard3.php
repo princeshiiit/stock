@@ -59,7 +59,7 @@ mysqli_close($conn); // Close connection
   <br/>
   <?php
 
-$link = mysqli_connect("localhost","root","bmwarecorp","stock");
+$link = mysqli_connect("localhost","root","","stock");
 
 $sql = "SELECT name FROM categories GROUP BY name;";
 

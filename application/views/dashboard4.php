@@ -115,7 +115,7 @@ mysqli_close($conn); // Close connection
   <br/>
   <?php
 
-$link = mysqli_connect("localhost","root","bmwarecorp","stock");
+$link = mysqli_connect("localhost","root","","stock");
 
 $sql = "SELECT order_id FROM orders_item GROUP BY order_id;";
 
