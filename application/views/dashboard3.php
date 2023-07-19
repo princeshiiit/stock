@@ -25,7 +25,7 @@
 <?php
  $servername = "localhost";
   $username = "root";
-  $password = "bmwarecorp";
+  $password = "";
   $database = "stock";
 
   // Create connection
