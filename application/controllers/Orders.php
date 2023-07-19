@@ -606,18 +606,44 @@ class Orders extends Admin_Controller
 						<div class="invoice-footer">
 						<center><h5><strong>THIS IS NOT YOUR OFFICIAL RECEIPT, PLEASE ASK FOR YOUR OFFICIAL RECEIPT</strong><h5></center>
 						<center><h4><strong>Limits of Liabilities:</strong><h4></center>
-							<h5>TERMS & CONDITIONS 1. Items not claimed within 60 days will be charged double the cost of services. 2. Items not claimed within 90 days will be disposed of to cover the cost of services rendered. 3. Laundry Shop System shall not be liable for any damages incurred due to natural effect of washer and dryer to the garments. To avoid such incidence. clients should declare the fragility of items to washer, dryer and pressing. 4. Laundry Shop System shall not be liable for any damages in case of fire, flood and other unforeseen events or lose through force majeure. 5. Laundry Shop System shall not be liable for any damages resulting from normal washing process, loss of buttons, anything left in pockets including shrinking and fading. 6. Liability of loss is limited to an amount not exceeding three times the laundry charges. 7. Laundry Shop System reserves the right to confirm accuracy of the items for laundry and inform customers of any discrepancy within 24 hours. 8. Complains will only be entertained within 24 hours from date of released or delivery.
-							</h5>
+							<h6>TERMS & CONDITIONS<br> 
+							 1. Items not claimed within 60 days will<br> 
+							 - be charged double the cost of services.<br>
+							 2. Items not claimed within 90 days will <br>
+							 - be disposed of to cover the cost of <br>
+							 - services rendered.<br>
+							 3. Laundry Shop System shall not be <br>
+							 - liable for any damages incurred due <br>
+							 - to natural effect of washer and dryer <br>
+							 - to the garments. To avoid such incidence.<br>
+							 - clients should declare the fragility <br>
+							 - of items to washer, dryer and pressing. <br>
+							 4. Laundry Shop System shall not be liable<br>
+							 - for any damages in case of fire, flood and <br>
+							 - other unforeseen events or lose through force <br>
+							 - majeure. <br>
+							 5. Laundry Shop System shall not be liable for<br>
+							 - any damages resulting from normal washing process,<br>
+							 - loss of buttons, anything left in pockets including<br>
+							 - shrinking and fading. <br>
+							 6. Liability of loss is limited to an amount not<br>
+							 - exceeding three times the laundry charges.<br>
+							 7. Laundry Shop System reserves the right to confirm <br>
+							 - accuracy of the items for laundry and inform customers<br>
+							 - of any discrepancy within 24 hours.<br>
+							 8. Complains will only be entertained within 24 hours<br>
+							 - from date of released or delivery.
+							</h6>
 						</div>
 						<div class="invoice-footer">
-						-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+						---------------------------------------------------------------------------------------------------------------------------------------
 						<center><h4><strong>Claiming Stub</strong><h4></center>
 						<center><h4>Customer name:'.$order_data['customer_name'].'<h4></center>
 						<center><h4>Bill No. :'.$order_data['id'].'<h4></center>
 						<center><h4>Transaction Date and Time: <h4></center>
 						<center><h4>'.$order_date.'<h4></center>
 						<center><h4>Date and Time:_____________________ <h4></center>
-						-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+						---------------------------------------------------------------------------------------------------------------------------------------
 							
 						</div>
 					</div>
