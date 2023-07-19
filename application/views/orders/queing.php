@@ -48,7 +48,7 @@
             <table id="manageTable" class="table table-bordered table-striped">
               <thead>
               <tr>
-                <th>Bill no</th>
+                <th>Transaction no</th>
                 <th>Customer Name</th>
                 <th>Customer Phone</th>
                 <th>Date Time</th>

@@ -525,7 +525,7 @@ class Orders extends Admin_Controller
                                             </li>
                                             <li>
                                                 <strong>Date and Time: '.$order_date.'</strong><br>
-                                                <strong>Bill No: '.$order_data['id'].'</strong>
+                                                <strong>Transaction No: '.$order_data['id'].'</strong>
                                             </li>
                                                <li><span><strong>Cashier: </span>'.$currentUser.'</strong></li>
                                                <li><span><strong>Customer: </span>'.$order_data['customer_name'].'</strong></li>
@@ -639,7 +639,7 @@ class Orders extends Admin_Controller
 						---------------------------------------------------------------------------------------------------------------------------------------
 						<center><h4><strong>Claiming Stub</strong><h4></center>
 						<center><h4>Customer name:'.$order_data['customer_name'].'<h4></center>
-						<center><h4>Bill No. :'.$order_data['id'].'<h4></center>
+						<center><h4>Transaction No. :'.$order_data['id'].'<h4></center>
 						<center><h4>Transaction Date and Time: <h4></center>
 						<center><h4>'.$order_date.'<h4></center>
 						<center><h4>Date and Time:_____________________ <h4></center>
@@ -712,7 +712,7 @@ class Orders extends Admin_Controller
                                             <li>
                                                 <strong>Date and Time: '.$order_date.'</strong>
                                                 <br>
-                                                <strong>Bill No: '.$order_data['id'].'</strong>
+                                                <strong>Transaction No: '.$order_data['id'].'</strong>
                                             </li>
                                                <li><span><strong>Customer: </span>'.$order_data['customer_name'].'</strong></li>
                                                 <li><span>Phone no: </span>'.$order_data['customer_phone'].'</li>
@@ -854,7 +854,7 @@ class Orders extends Admin_Controller
                                             <center>Customer Claim Stub
                                             <div>&nbsp;</div>
                                             <strong>Customer Name:'.$order_data['customer_name'].'</strong><br>
-                                            <strong>Bill No: '.$order_data['id'].'</strong></center>
+                                            <strong>Transaction No: '.$order_data['id'].'</strong></center>
                                             <div>&nbsp;</div>
                                             <div>&nbsp;</div>
                                         </li>
@@ -868,7 +868,7 @@ class Orders extends Admin_Controller
                                             <center>Customer Claim Stub
                                             <div>&nbsp;</div>
                                             <strong>Customer Name:'.$order_data['customer_name'].'</strong><br>
-                                            <strong>Bill No: '.$order_data['id'].'</strong></center>
+                                            <strong>Transaction No: '.$order_data['id'].'</strong></center>
                                             <div>&nbsp;</div>
                                             <div>&nbsp;</div>
                                         </li>
