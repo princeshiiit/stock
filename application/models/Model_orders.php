@@ -83,7 +83,7 @@ public function getOrdersData123($id = null)
 // $timestamp = strtotime($dateString);
 // $reversedDateString = date("Y-m-d H:i:s", $timestamp);
 
-		$sql = "SELECT * FROM orders_item WHERE Staff = '".$currentUser."' ORDER BY id DESC";
+		$sql = "SELECT * FROM orders_item ORDER BY id DESC";
 		$query = $this->db->query($sql);
 		return $query->result_array();
 	}
