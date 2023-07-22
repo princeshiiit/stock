@@ -199,16 +199,26 @@ mysqli_close($link);
     		
 
     		);
+
+			$reports = array(
+    			'product_name' => $product_name['name'],
+				'qty' => $this->input->post('qty')[$x],
+				'date_time' => $timestamp,
+	    		);
+    		
+    			
+				$this->db->insert('daily_reports', $reports);
     		
     			$test=$this->input->post('product')[$x];
     			$newval=$this->input->post('qty')[$x];
     			$sql4 = "UPDATE products SET `qty_used`=qty_used+$newval WHERE id='$test'"; 
-      if ($this->db->query($sql4) === TRUE) {
-   
+      			if ($this->db->query($sql4) === TRUE) {}
 
-  
-
-      }
+				//   SELECT product_name, SUM(qty) AS total_amount
+				//   FROM daily_reports
+				//   WHERE product_name = 'DRY11' -- Replace 'John' with the desired name
+				// 	AND DATE(FROM_UNIXTIME(date_time)) = CURRENT_DATE
+				//   GROUP BY product_name;
     			//echo $test;
 //if($test=="112"){
 //$sql3 = "UPDATE machine SET `prod_qty`=prod_qty+$newval WHERE prod_id='101'"; 

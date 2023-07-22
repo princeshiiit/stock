@@ -67,36 +67,105 @@
           <section class="content">
       <button class = "btn btn-success btn-print" onclick="tableToExcel('manageTable', 'reports')"><i class ="glyphicon glyphicon-arrow-down"></i>Export Table</button>
  <h4>
-        All reports by current user
+        All reports order item reports
       </h4>
-          <div class="box-body">
+      <div class="box-body">
            
-            <table id="manageTable" class="table table-bordered table-striped">
+           <table id="manageTable" class="table table-bordered table-striped">
+            
+
+             <thead>
+             <tr>
+
+               <th>Item No.</th>
+               <th>Transaction No.</th>
+               <th>Product Name</th>
+               <th>Amount</th>
+               <th>Rate</th>
+               <th>Quantity</th>
+               <th>Cashier</th>
+               <th>Date and Time (Day/Month/Year)</th>
+              
+               
+             </tr>
+             
+             </thead>
+             <tbody>
+
+                 
+               </tbody>
+               
+             <tfoot>
+   <tr>
+     <th></th>
+               <th>Total Amount:</th>
+               <th></th>
+               <th id="totalAmount1">0</th>
+               <th></th>
+               <th></th>
+               
+    
+   </tr>
+ </tfoot>
+
+           </table>
+             
+         
+         </div>
+         <div class="box-body">
+           
+            <table id="manageTable3" class="table table-bordered table-striped">
              
 
               <thead>
               <tr>
 
-                <th>Item No.</th>
-                <th>Transaction No.</th>
                 <th>Product Name</th>
-                <th>Amount</th>
-                <th>Rate</th>
-                <th>Quantity</th>
-                <th>Cashier</th>
-                <th>Date and Time (Day/Month/Year)</th>
+                <th>Sold Count for today</th>
+                
                
                 
               </tr>
               
+              
               </thead>
               <tbody>
+              
+                <?php 
+                $link = mysqli_connect("localhost","root","","stock");
+                $selectedname=$this->input->post('custdetails');
+                $sql = "SELECT * FROM daily_reports";
+                
+                $result = mysqli_query($link,$sql);
+                if ($result != 0) {
+   
+                  $num_results = mysqli_num_rows($result);
+                  for ($i=0;$i<$num_results;$i++) {
+                      $row = mysqli_fetch_array($result);
+                      $fullname = $row['product_name'];
+                      $qty = $row['qty'];
+                      echo '<tr><td> '.$fullname.' </td><td> '.$qty.' </td></tr>';
+
+                     
+                  }
+              
+                 
+              }
+                
+                
+                ?>
+
+<!-- <th>Product Name</th>
+<th>Sold Count for today</th> -->
+
+
+
 
                   
                 </tbody>
                 
               <tfoot>
-    <tr>
+    <!-- <tr>
       <th></th>
                 <th>Total Amount:</th>
                 <th></th>
@@ -105,7 +174,7 @@
                 <th></th>
                 
      
-    </tr>
+    </tr> -->
   </tfoot>
 
             </table>
