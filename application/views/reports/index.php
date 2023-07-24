@@ -15,14 +15,15 @@
 
     <!-- Main content -->
     <section class="content">
-      <button class = "btn btn-success btn-print" onclick="tableToExcel('manageTable1', 'reports')"><i class ="glyphicon glyphicon-arrow-down"></i>Export Shift Report</button>
+      <!-- <button class = "btn btn-success btn-print" onclick="tableToExcel('manageTable1', 'reports')"><i class ="glyphicon glyphicon-arrow-down"></i>Export Shift Report</button> -->
 
       
       <h4>
         Shift Reports - Note: This from Login Time to Current Time Report, If you have already logged out, it will reset
       </h4>
       <div class="box-body">
-           
+      <button class = "btn btn-success btn-print" onclick="tableToExcel('manageTable1', 'reports')"><i class ="glyphicon glyphicon-arrow-down"></i>Export Shift Report</button>
+
             <table id="manageTable1" class="table table-bordered table-striped">
              
 
@@ -113,7 +114,7 @@
          
          </div>
          <div class="box-body">
-           
+         <button class = "btn btn-success btn-print" onclick="tableToExcel('manageTable3', 'product_sold_count_report')"><i class ="glyphicon glyphicon-arrow-down"></i>Export Table</button>
             <table id="manageTable3" class="table table-bordered table-striped">
              
 
@@ -121,7 +122,9 @@
               <tr>
 
                 <th>Product Name</th>
-                <th>Sold Count for today</th>
+                <th>Sold Count</th>
+                <th>Rate</th>
+                <th>Amount</th>
                 
                
                 
@@ -143,31 +146,50 @@
                   for ($i=0;$i<$num_results;$i++) {
                       $row = mysqli_fetch_array($result);
                       $name = $row['name'];
+                      $rate = $row['price'];
                       $sql2 = "SELECT * FROM orders_item WHERE product_name = $name";
                       $currentDate2 = date('Y/m/d'); // Get the current date in the format: Year-Month-Day
                       $timestamp2 = strtotime($currentDate2);
-                      $totalQuery = "SELECT product_name, SUM(qty) AS total_amount FROM orders_item WHERE `product_name` = '$name' AND DATE(FROM_UNIXTIME(date_time)) = CURRENT_DATE";
+                      $totalQuery = "SELECT product_name, SUM(qty) AS count FROM orders_item WHERE `product_name` = '$name' AND DATE(FROM_UNIXTIME(date_time)) = CURRENT_DATE";
                       // $result = $link->query($totalQuery);
                       // $row = $result->fetch_assoc()
                       $result2 = mysqli_query($link,$totalQuery);
                       $row2 = mysqli_fetch_array($result2);
-                      $value = $row2['total_amount'];
+                      $value = $row2['count'];
                       if ($value == '') {
                         $value = 0;
                       }
 
+                      $amount = $value * $rate;
+                      $totalAmount = $totalAmount + $amount;
+
+                      
+
                      
                       
                       // $qty = $row['qty'];
-                      echo '<tr><td> '.$name.' </td><td>'.$value.'</td></tr>';
+                      echo '<tr><td> '.$name.' </td><td>'.$value.'</td><td>₱'.$rate.'</td><td>₱'.$amount.'</td></tr>';
                       // $value = $value - $value;
                       // echo '.$row['total_amount'].';
 
                      
                   }
+
+                  echo '          </tbody><tfoot>
+                  <tr>
+                    <th></th>
+                              <th>Total Amount:</th>
+                              <th></th>
+                              <th id="totalAmount1">₱ '.$totalAmount.'</th>
+                              <th></th>
+                              <th></th>
+                              
+                   
+                  </tr>
+                </tfoot>';
               
                  
-              }
+                }
                 
                 
                 ?>
@@ -179,20 +201,20 @@
 
 
                   
-                </tbody>
+                <!-- </tbody> -->
                 
-              <tfoot>
-    <!-- <tr>
+              <!-- <tfoot>
+    <tr>
       <th></th>
                 <th>Total Amount:</th>
                 <th></th>
-                <th id="totalAmount1">0</th>
+                <th id="totalAmount1"><?php $rate?></th>
                 <th></th>
                 <th></th>
                 
      
-    </tr> -->
-  </tfoot>
+    </tr>
+  </tfoot> -->
 
             </table>
               
