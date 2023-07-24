@@ -133,8 +133,8 @@
               
                 <?php 
                 $link = mysqli_connect("localhost","root","","stock");
-                $selectedname=$this->input->post('custdetails');
-                $sql = "SELECT * FROM daily_reports";
+                // $selectedname=$this->input->post('custdetails');
+                $sql = "SELECT * FROM products";
                 
                 $result = mysqli_query($link,$sql);
                 if ($result != 0) {
@@ -142,9 +142,26 @@
                   $num_results = mysqli_num_rows($result);
                   for ($i=0;$i<$num_results;$i++) {
                       $row = mysqli_fetch_array($result);
-                      $fullname = $row['product_name'];
-                      $qty = $row['qty'];
-                      echo '<tr><td> '.$fullname.' </td><td> '.$qty.' </td></tr>';
+                      $name = $row['name'];
+                      $sql2 = "SELECT * FROM orders_item WHERE product_name = $name";
+                      $currentDate2 = date('Y/m/d'); // Get the current date in the format: Year-Month-Day
+                      $timestamp2 = strtotime($currentDate2);
+                      $totalQuery = "SELECT product_name, SUM(qty) AS total_amount FROM orders_item WHERE `product_name` = '$name' AND DATE(FROM_UNIXTIME(date_time)) = CURRENT_DATE";
+                      // $result = $link->query($totalQuery);
+                      // $row = $result->fetch_assoc()
+                      $result2 = mysqli_query($link,$totalQuery);
+                      $row2 = mysqli_fetch_array($result2);
+                      $value = $row2['total_amount'];
+                      if ($value == '') {
+                        $value = 0;
+                      }
+
+                     
+                      
+                      // $qty = $row['qty'];
+                      echo '<tr><td> '.$name.' </td><td>'.$value.'</td></tr>';
+                      // $value = $value - $value;
+                      // echo '.$row['total_amount'].';
 
                      
                   }
