@@ -33,14 +33,27 @@ class Auth extends Admin_Controller
 
            		if($login) {
            			date_default_timezone_set('Asia/Manila');
-           			$logged_in_sess = array(
-           				'id' => $login['id'],
-				        'username'  => $login['username'],
-				        'email'     => $login['email'],
-				        'logged_in' => TRUE,
-				        'Time_in'	=> date('Y/m/d h:i:s'),
-				        'user_id'	=> $login['user_id']
-					);
+					if ($_SESSION['username'] == $login['username']) {
+						$logged_in_sess = array(
+							'id' => $login['id'],
+						 'username'  => $login['username'],
+						 'email'     => $login['email'],
+						 'logged_in' => TRUE,
+						 'user_id'	=> $login['user_id']
+					 );
+
+					} else {
+						$logged_in_sess = array(
+							'id' => $login['id'],
+						 'username'  => $login['username'],
+						 'email'     => $login['email'],
+						 'logged_in' => TRUE,
+						 'Time_in'	=> date('Y/m/d h:i:s'),
+						 'user_id'	=> $login['user_id']
+					 );
+
+					}
+           			
 
 					$this->session->set_userdata($logged_in_sess);
            			redirect('dashboard', 'refresh');
@@ -67,7 +80,7 @@ class Auth extends Admin_Controller
 	*/
 	public function logout()
 	{
-		$this->session->sess_destroy();
+		$this->session->set_userdata('logged_in', false);
 		redirect('auth/login', 'refresh');
 	}
 
