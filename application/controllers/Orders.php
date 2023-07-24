@@ -141,6 +141,58 @@ class Orders extends Admin_Controller
 		echo json_encode($result);
 	}
 
+	public function fetchOrdersDataCurrentUserYesterday()
+	{
+		$result = array('data' => array());
+
+		$data = $this->model_orders->getOrdersDataYesterday();
+
+		foreach ($data as $key => $value) {
+
+			$count_total_item = $this->model_orders->countOrderItem($value['id']);
+			$date = date('Y/m/d', $value['date_time']);
+			$time = date('h:i:s', $value['date_time']);
+
+			$date_time = $date . ' ' . $time;
+
+			// button
+			$buttons = '';
+
+			if(in_array('viewOrder', $this->permission)) {
+				$buttons .= '<a target="__blank" href="'.base_url('orders/printDiv/'.$value['id']).'" class="btn btn-default"><i class="fa fa-print"></i></a>';
+			}
+
+			if(in_array('updateOrder', $this->permission)) {
+				$buttons .= ' <a href="'.base_url('orders/update/'.$value['id']).'" class="btn btn-default"><i class="fa fa-pencil"></i></a>';
+			}
+
+			if(in_array('deleteOrder', $this->permission)) {
+				$buttons .= ' <button type="button" class="btn btn-default" onclick="removeFunc('.$value['id'].')" data-toggle="modal" data-target="#removeModal"><i class="fa fa-trash"></i></button>';
+			}
+
+			if($value['paid_status'] == 1) {
+				$paid_status = '<span class="label label-success">Paid</span>';	
+			}
+			else {
+				$paid_status = '<span class="label label-warning">Not Paid</span>';
+			}
+
+			$result['data'][$key] = array(
+				$value['id'],
+				$value['order_id'],
+				$value['product_name'],
+				$value['amount'],
+				$value['rate'],
+				$value['qty'],
+				
+				$value['Staff'],
+				$date_time
+			);
+		} // /foreach
+
+		echo json_encode($result);
+	}
+
 	public function fetchOrdersDataCurrentUser2()
 	{
 		$result = array('data' => array());

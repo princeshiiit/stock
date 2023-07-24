@@ -18,11 +18,10 @@
       <!-- <button class = "btn btn-success btn-print" onclick="tableToExcel('manageTable1', 'reports')"><i class ="glyphicon glyphicon-arrow-down"></i>Export Shift Report</button> -->
 
       
-      <h4>
-        Shift Reports - Note: This from Login Time to Current Time Report, If you have already logged out, it will reset
-      </h4>
+      <h4>Current Orders
+        </h4>
       <div class="box-body">
-      <button class = "btn btn-success btn-print" onclick="tableToExcel('manageTable1', 'Orders_item')"><i class ="glyphicon glyphicon-arrow-down"></i>Export Shift Report</button>
+      <button class = "btn btn-success btn-print" onclick="tableToExcel('manageTable1', '<?php echo date('Y/m/d'); ?>')"><i class ="glyphicon glyphicon-arrow-down"></i>Export Current Report</button>
 
             <table width="100%" id="manageTable1" class="table table-bordered table-striped">
              
@@ -65,10 +64,56 @@
               
           
           </div>
+          <h4>Yesterday Orders
+        </h4>
+      <div class="box-body">
+      <button class = "btn btn-success btn-print" onclick="tableToExcel('manageTable1', '<?php echo date('Y/m/d', strtotime('-1 day', strtotime(date('Y/m/d')))); ?>')"><i class ="glyphicon glyphicon-arrow-down"></i>Export Yesterday Report</button>
+
+            <table width="100%" id="manageTableYesterday" class="table table-bordered table-striped">
+             
+
+              <thead>
+              <tr>
+
+                <th>Item No.</th>
+                <th>Transaction No.</th>
+                <th>Product Name</th>
+                <th>Amount</th>
+                <th>Rate</th>
+                <th>Quantity</th>
+                <th>Cashier</th>
+                <th>Date and Time (Day/Month/Year)</th>
+               
+                
+              </tr>
+              
+              </thead>
+              <tbody>
+
+                  
+                </tbody>
+                
+              <tfoot>
+    <tr>
+      <th></th>
+                <th>Total Amount:</th>
+                <th></th>
+                <th id="totalAmountYesterday">0</th>
+                <th></th>
+                <th></th>
+                
+     
+    </tr>
+  </tfoot>
+
+            </table>
+              
+          
+          </div>
           <section class="content">
       <button class = "btn btn-success btn-print" onclick="tableToExcel('manageTable', 'All_Orders_Item')"><i class ="glyphicon glyphicon-arrow-down"></i>Export Table</button>
  <h4>
-        All reports order item reports
+        All orders
       </h4>
       <div class="box-body">
            
@@ -116,7 +161,7 @@
          <?php if($user_permission): ?>
             <?php if(in_array('deleteOrder', $user_permission)): ?> 
          <div class="box-body">
-         <button class = "btn btn-success btn-print" onclick="tableToExcel('manageTable3', 'product_sold_count_report')"><i class ="glyphicon glyphicon-arrow-down"></i>Export Table</button>
+         <button class = "btn btn-success btn-print" onclick="tableToExcel('manageTable3', 'Product Report - <?php echo date('Y/m/d h:i:s'); ?>')"><i class ="glyphicon glyphicon-arrow-down"></i>Export Product Reports</button>
             <table width="100%" id="manageTable3" class="table table-bordered table-striped">
              
 
@@ -280,6 +325,28 @@ $(document).ready(function() {
 
 });
 
+var manageTableYesterday;
+var base_url = "<?php echo base_url(); ?>";
+
+$(document).ready(function() {
+
+  $("#mainOrdersNav").addClass('active');
+  $("#manageOrdersNav").addClass('active');
+
+  // initialize the datatable 
+  manageTableYesterday = $('#manageTableYesterday').DataTable({
+    'ajax': base_url + 'orders/fetchOrdersDataCurrentUserYesterday',
+    'order': [],
+    'initComplete': function(settings, json) {
+          // Calculate and update the total amount
+          updateTotalAmount();
+        }
+
+  });
+
+
+});
+
 var tableToExcel = (function() {
   var uri = 'data:application/vnd.ms-excel;base64,';
   var template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}<tfoot></tfoot></table></body></html>';
@@ -313,6 +380,13 @@ function updateTotalAmount() {
         total += parseFloat(value[3]);
       });
       $('#totalAmount1').text(total.toFixed(2));
+
+      var totalYesterday = 0;
+      var data = manageTableYesterday.rows().data();
+      $.each(data, function(index, value) {
+        totalYesterday += parseFloat(value[3]);
+      });
+      $('#totalAmountYesterday').text(totalYesterday.toFixed(2));
     }
 
     $(document).ready(function() {

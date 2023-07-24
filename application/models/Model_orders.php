@@ -61,7 +61,31 @@ public function getOrdersData123($id = null)
 // $timestamp = strtotime($dateString);
 // $reversedDateString = date("Y-m-d H:i:s", $timestamp);
 
-		$sql = "SELECT * FROM orders_item WHERE date_time BETWEEN '".$unixTimeStart."' AND '".$currentTime."' AND Staff = '".$currentUser."' ORDER BY order_id ASC";
+		// $sql = "SELECT * FROM orders_item WHERE date_time BETWEEN '".$unixTimeStart."' AND '".$currentTime."' AND Staff = '".$currentUser."' ORDER BY order_id ASC";
+		$sql = "SELECT * FROM orders_item WHERE Staff ='".$currentUser."' AND DATE(FROM_UNIXTIME(date_time)) = CURRENT_DATE ORDER BY order_id ASC";
+		$query = $this->db->query($sql);
+		return $query->result_array();
+	}
+
+	public function getOrdersDataYesterday($id = null)
+	{
+		if($id) {
+			$sql = "SELECT * FROM orders_item WHERE order_id = ?";
+			$query = $this->db->query($sql, array($id));
+			return $query->row_array();
+		}
+		$currentUser = $this->session->userdata('username');
+		$timein = $this->session->userdata('Time_in');
+        $unixTimeStart = strtotime($timein);
+		$end = date('Y/m/d h:i:s');
+		$currentTime = strtotime($end);
+
+// 		$dateString = "2023-07-16 12:34:56";
+// $timestamp = strtotime($dateString);
+// $reversedDateString = date("Y-m-d H:i:s", $timestamp);
+
+		// $sql = "SELECT * FROM orders_item WHERE date_time BETWEEN '".$unixTimeStart."' AND '".$currentTime."' AND Staff = '".$currentUser."' ORDER BY order_id ASC";
+		$sql = "SELECT * FROM orders_item WHERE Staff ='".$currentUser."' AND DATE(FROM_UNIXTIME(date_time)) = CURRENT_DATE - 1 ORDER BY order_id ASC";
 		$query = $this->db->query($sql);
 		return $query->result_array();
 	}
