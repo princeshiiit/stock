@@ -161,7 +161,7 @@
          <?php if($user_permission): ?>
             <?php if(in_array('deleteOrder', $user_permission)): ?> 
          <div class="box-body">
-         <button class = "btn btn-success btn-print" onclick="tableToExcel('manageTable3', 'Product Report - <?php echo date('Y/m/d h:i:s'); ?>')"><i class ="glyphicon glyphicon-arrow-down"></i>Export Product Reports</button>
+         <button class = "btn btn-success btn-print" onclick="tableToExcel('manageTable3', 'Product Report - <?php echo date('Y/m/d'); ?>')"><i class ="glyphicon glyphicon-arrow-down"></i>Export Product Reports</button>
             <table width="100%" id="manageTable3" class="table table-bordered table-striped">
              
 
