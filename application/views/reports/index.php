@@ -22,9 +22,9 @@
         Shift Reports - Note: This from Login Time to Current Time Report, If you have already logged out, it will reset
       </h4>
       <div class="box-body">
-      <button class = "btn btn-success btn-print" onclick="tableToExcel('manageTable1', 'reports')"><i class ="glyphicon glyphicon-arrow-down"></i>Export Shift Report</button>
+      <button class = "btn btn-success btn-print" onclick="tableToExcel('manageTable1', 'Orders_item')"><i class ="glyphicon glyphicon-arrow-down"></i>Export Shift Report</button>
 
-            <table id="manageTable1" class="table table-bordered table-striped">
+            <table width="100%" id="manageTable1" class="table table-bordered table-striped">
              
 
               <thead>
@@ -66,13 +66,13 @@
           
           </div>
           <section class="content">
-      <button class = "btn btn-success btn-print" onclick="tableToExcel('manageTable', 'reports')"><i class ="glyphicon glyphicon-arrow-down"></i>Export Table</button>
+      <button class = "btn btn-success btn-print" onclick="tableToExcel('manageTable', 'All_Orders_Item')"><i class ="glyphicon glyphicon-arrow-down"></i>Export Table</button>
  <h4>
         All reports order item reports
       </h4>
       <div class="box-body">
            
-           <table id="manageTable" class="table table-bordered table-striped">
+           <table width="100%" id="manageTable" class="table table-bordered table-striped">
             
 
              <thead>
@@ -109,13 +109,15 @@
    </tr>
  </tfoot>
 
-           </table>
+</table>
              
          
          </div>
+         <?php if($user_permission): ?>
+            <?php if(in_array('deleteOrder', $user_permission)): ?> 
          <div class="box-body">
          <button class = "btn btn-success btn-print" onclick="tableToExcel('manageTable3', 'product_sold_count_report')"><i class ="glyphicon glyphicon-arrow-down"></i>Export Table</button>
-            <table id="manageTable3" class="table table-bordered table-striped">
+            <table width="100%" id="manageTable3" class="table table-bordered table-striped">
              
 
               <thead>
@@ -220,48 +222,11 @@
               
           
           </div>
+
+          <?php endif; ?>
+        <?php endif; ?>
       <!-- Small boxes (Stat box) -->
-      <div class="row">
-
-        <div class="col-md-12 col-xs-12">
-          <form class="form-inline" action="<?php echo base_url('reports/') ?>" method="POST">
-            <div class="form-group">
-              <label for="date">Year</label>
-              <select class="form-control" name="select_year" id="select_year">
-                <?php foreach ($report_years as $key => $value): ?>
-                  <option value="<?php echo $value ?>" <?php if($value == $selected_year) { echo "selected"; } ?>><?php echo $value; ?></option>
-                <?php endforeach ?>
-              </select>
-            </div>
-            <button type="submit" class="btn btn-default">Submit</button>
-          </form>
-        </div>
-
-        <br /> <br />
-
-
-        <div class="col-md-12 col-xs-12">
-
-         
-
-          <div class="box">
-            <div class="box-header">
-              <h3 class="box-title">Total - Report</h3>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-              <div class="chart">
-                <canvas id="barChart" style="height:250px"></canvas>
-              </div>
-            </div>
-            <!-- /.box-body -->
-          </div>
-          <!-- /.box -->
-          
-          <!-- /.box -->
-        </div>
-        <!-- col-md-12 -->
-      </div>
+      
       <!-- /.row -->
       
 
@@ -316,16 +281,22 @@ $(document).ready(function() {
 });
 
 var tableToExcel = (function() {
-  var uri = 'data:application/vnd.ms-excel;base64,'
-    , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}<tfoot></tfoot></table></body></html>'
-    , base64 = function(s) { return window.btoa(unescape(encodeURIComponent(s))) }
-    , format = function(s, c) { return s.replace(/{(\w+)}/g, function(m, p) { return c[p]; }) }
+  var uri = 'data:application/vnd.ms-excel;base64,';
+  var template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}<tfoot></tfoot></table></body></html>';
+  var base64 = function(s) { return window.btoa(unescape(encodeURIComponent(s))); }
+  var format = function(s, c) { return s.replace(/{(\w+)}/g, function(m, p) { return c[p]; }); }
+
   return function(table, name) {
-    if (!table.nodeType) table = document.getElementById(table)
-    var ctx = {worksheet: "Reports", table: table.innerHTML}
-    window.location.href = uri + base64(format(template, ctx))
-  }
-})()
+    if (!table.nodeType) table = document.getElementById(table);
+    var ctx = { worksheet: name || "Reports", table: table.innerHTML }; // Use the provided name or default to "Reports"
+    var filename = (name || "Reports") + ".xls"; // Default filename with .xls extension
+
+    var link = document.createElement("a");
+    link.download = filename;
+    link.href = uri + base64(format(template, ctx));
+    link.click();
+  };
+})();
 
 
 function updateTotalAmount() {
