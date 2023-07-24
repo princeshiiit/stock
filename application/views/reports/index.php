@@ -322,7 +322,7 @@ var tableToExcel = (function() {
     , format = function(s, c) { return s.replace(/{(\w+)}/g, function(m, p) { return c[p]; }) }
   return function(table, name) {
     if (!table.nodeType) table = document.getElementById(table)
-    var ctx = {worksheet: "Shift Report", table: table.innerHTML}
+    var ctx = {worksheet: "Reports", table: table.innerHTML}
     window.location.href = uri + base64(format(template, ctx))
   }
 })()
