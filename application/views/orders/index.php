@@ -85,7 +85,7 @@
                   <th>Customer Name</th>
                   <th>Customer Phone</th>
                   <th>Date Time</th>
-                  <th>Total Products</th>
+                  <th>Total no. of Item</th>
                   <th>Total Amount</th>
                   <th>Express</th>
                   <th>Remarks</th>

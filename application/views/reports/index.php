@@ -29,8 +29,8 @@
         <thead>
           <tr>
 
-            <th>Item No.</th>
             <th>Transaction No.</th>
+            <th>Item No.</th>
             <th>Product Name</th>
             <th>Amount</th>
             <th>Rate</th>
@@ -77,8 +77,8 @@
         <thead>
           <tr>
 
-            <th>Item No.</th>
             <th>Transaction No.</th>
+            <th>Item No.</th>
             <th>Product Name</th>
             <th>Amount</th>
             <th>Rate</th>
@@ -125,9 +125,8 @@
 
           <thead>
             <tr>
-
-              <th>Item No.</th>
               <th>Transaction No.</th>
+              <th>Item No.</th>
               <th>Product Name</th>
               <th>Amount</th>
               <th>Rate</th>

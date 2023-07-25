@@ -126,13 +126,12 @@ class Orders extends Admin_Controller
 			}
 
 			$result['data'][$key] = array(
-				$value['id'],
 				$value['order_id'],
+				$value['id'],
 				$value['product_name'],
 				$value['amount'],
 				$value['rate'],
 				$value['qty'],
-				
 				$value['Staff'],
 				$date_time
 			);
@@ -178,13 +177,12 @@ class Orders extends Admin_Controller
 			}
 
 			$result['data'][$key] = array(
-				$value['id'],
 				$value['order_id'],
+				$value['id'],
 				$value['product_name'],
 				$value['amount'],
 				$value['rate'],
 				$value['qty'],
-				
 				$value['Staff'],
 				$date_time
 			);
@@ -208,13 +206,12 @@ class Orders extends Admin_Controller
 			$date_time = $date . ' ' . $time;
 
 			$result['data'][$key] = array(
-				$value['id'],
 				$value['order_id'],
+				$value['id'],
 				$value['product_name'],
 				$value['amount'],
 				$value['rate'],
 				$value['qty'],
-				
 				$value['Staff'],
 				$date_time
 			);
@@ -246,13 +243,12 @@ class Orders extends Admin_Controller
 			
 
 			$result['data'][$key] = array(
-				$value['id'],
 				$value['order_id'],
+				$value['id'],
 				$value['product_name'],
 				$value['amount'],
 				$value['rate'],
 				$value['qty'],
-				
 				$value['Staff'],
 				$date_time,
 				$value['voided_date']
