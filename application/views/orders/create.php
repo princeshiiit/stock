@@ -1,5 +1,3 @@
-
-
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
@@ -22,14 +20,16 @@
 
         <div id="messages"></div>
 
-        <?php if($this->session->flashdata('success')): ?>
+        <?php if ($this->session->flashdata('success')): ?>
           <div class="alert alert-success alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                aria-hidden="true">&times;</span></button>
             <?php echo $this->session->flashdata('success'); ?>
           </div>
-        <?php elseif($this->session->flashdata('error')): ?>
+        <?php elseif ($this->session->flashdata('error')): ?>
           <div class="alert alert-error alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                aria-hidden="true">&times;</span></button>
             <?php echo $this->session->flashdata('error'); ?>
           </div>
         <?php endif; ?>
@@ -43,263 +43,286 @@
 
 
 
-<!--CREATE CUSTOMER-->
+          <!--CREATE CUSTOMER-->
 
 
 
 
           <form method="POST">
-          <div class="modal fade" id="modalRegisterForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-  aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold"><strong>Customer Information</strong></h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body mx-3">
-        <div class="md-form mb-5">
-          <!-- <i class="fas fa-user prefix grey-text"></i> -->
-          <label data-error="wrong" data-success="right" for="orangeForm-name">Full name:</label>
-          <input name="cusname" type="text" id="orangeForm-name" required class="form-control validate">
-          
-        </div>
-        <div class="md-form mb-5">
-          <!-- <i class="fas fa-envelope prefix grey-text"></i> -->
+            <div class="modal fade" id="modalRegisterForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+              aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header text-center">
+                    <h4 class="modal-title w-100 font-weight-bold"><strong>Customer Information</strong></h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body mx-3">
+                    <div class="md-form mb-5">
+                      <!-- <i class="fas fa-user prefix grey-text"></i> -->
+                      <label data-error="wrong" data-success="right" for="orangeForm-name">Full name:</label>
+                      <input name="cusname" type="text" id="orangeForm-name" required class="form-control validate">
 
-          <label data-error="wrong" data-success="right" for="orangeForm-email">Address:</label>
-          <input name="cusadd" type="text" id="orangeForm-email" class="form-control validate">
-        </div>
+                    </div>
+                    <div class="md-form mb-5">
+                      <!-- <i class="fas fa-envelope prefix grey-text"></i> -->
 
-        <div class="md-form mb-4">
-          <!-- <i class="fas fa-lock prefix grey-text"></i> -->
+                      <label data-error="wrong" data-success="right" for="orangeForm-email">Address:</label>
+                      <input name="cusadd" type="text" id="orangeForm-email" class="form-control validate">
+                    </div>
 
-          <label data-error="wrong" data-success="right" for="orangeForm-pass">Contact no. :</label>
-          <input name="cusphone" type="text" id="orangeForm-pass" class="form-control validate">
-        </div>
+                    <div class="md-form mb-4">
+                      <!-- <i class="fas fa-lock prefix grey-text"></i> -->
 
-      </div>
-      <div class="modal-footer d-flex justify-content-center">
-        <input type="submit" class="btn btn-primary"name="submit" value="Add Customer">
+                      <label data-error="wrong" data-success="right" for="orangeForm-pass">Contact no. :</label>
+                      <input name="cusphone" type="text" id="orangeForm-pass" class="form-control validate">
+                    </div>
 
-      </div>
-    </div>
-  </div>
-</div>
-</form>
-<?php
- $servername = "localhost";
-  $username = "root";
-  $password = "";
-  $database = "stock";
+                  </div>
+                  <div class="modal-footer d-flex justify-content-center">
+                    <input type="submit" class="btn btn-primary" name="submit" value="Add Customer">
 
-  // Create connection
-  $conn = new mysqli($servername, $username, $password, $database);
-if(isset($_POST['submit']))
-{   
-    $fullname = $_POST['cusname'];
-    $age = $_POST['cusadd'];
-  $age2 = $_POST['cusphone'];
-    $insert = mysqli_query($conn,"INSERT INTO `customer`(`fullname`, `address`, `phone`) VALUES ('$fullname','$age','$age2')");
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+          <?php
+          $servername = "localhost";
+          $username = "root";
+          $password = "";
+          $database = "stock";
 
-    if(!$insert)
-    {
-        echo mysqli_error();
-    }
-    else
-    {
-        $page = $_SERVER['PHP_SELF'];
-echo '<meta http-equiv="Refresh" content="0;' . $page . '">';
+          // Create connection
+          $conn = new mysqli($servername, $username, $password, $database);
+          if (isset($_POST['submit'])) {
+            $fullname = $_POST['cusname'];
+            $age = $_POST['cusadd'];
+            $age2 = $_POST['cusphone'];
+            $insert = mysqli_query($conn, "INSERT INTO `customer`(`fullname`, `address`, `phone`) VALUES ('$fullname','$age','$age2')");
 
-    }
-}
+            if (!$insert) {
+              echo mysqli_error();
+            } else {
+              $page = $_SERVER['PHP_SELF'];
+              echo '<meta http-equiv="Refresh" content="0;' . $page . '">';
 
-mysqli_close($conn); // Close connection
-?>
-<!-- END CREATE CUSTOMER-->
+            }
+          }
+
+          mysqli_close($conn); // Close connection
+          ?>
+          <!-- END CREATE CUSTOMER-->
 
           <!-- /.box-header -->
           <form role="form" action="<?php base_url('orders/create') ?>" method="post" class="form-horizontal">
-              <div class="box-body">
+            <div class="box-body">
 
-                <?php 
+              <?php
 
-                echo validation_errors(); 
-                date_default_timezone_set("Asia/Manila");
+              echo validation_errors();
+              date_default_timezone_set("Asia/Manila");
 
 
-                ?>
+              ?>
+
+              <div class="form-group">
+                <label for="gross_amount" class="col-sm-12 control-label">Date:
+                  <?php
+                  date_default_timezone_set("Asia/Manila");
+                  echo date('Y-m-d') ?>
+                </label>
+              </div>
+              <div class="form-group">
+                <label for="gross_amount" class="col-sm-12 control-label">Time:
+                  <?php
+                  date_default_timezone_set("Asia/Manila");
+                  echo date('h:i a') ?>
+                </label>
+              </div>
+
+              <div class="col-md-4 col-xs-12 pull pull-left">
+
 
                 <div class="form-group">
-                  <label for="gross_amount" class="col-sm-12 control-label">Date: <?php 
-                    date_default_timezone_set("Asia/Manila");
-                   echo date('Y-m-d') ?></label>
+
+
+                  <!-- MOWDAL -->
+                  <div class="text-center">
+                    <?php
+
+                    $link = mysqli_connect("localhost", "root", "", "stock");
+
+                    $sql = "SELECT * FROM customer ORDER BY fullname ASC";
+
+                    $result = mysqli_query($link, $sql);
+                    if ($result != 0) {
+                      echo ' <div class="form-group">';
+                      echo ' <label for="exampleFormControlSelect1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Customer information</label>';
+                      echo '<select name="custdetails" class="form-control" id="exampleFormControlSelect1" onchange="getCustomerData(1)">';
+                      echo '<option value="">WALK-IN</option>';
+                      $num_results = mysqli_num_rows($result);
+                      for ($i = 0; $i < $num_results; $i++) {
+                        $row = mysqli_fetch_array($result);
+                        $name = $row['fullname'];
+                        echo '<option value="' . $name . '">' . $name . '</option>';
+                      }
+
+                      echo '</select>';
+
+                      echo '</div>';
+                    }
+                    mysqli_close($link);
+
+                    ?>
+
+
+                    <a href="" class="btn btn-success" data-toggle="modal" data-target="#modalRegisterForm"><big><b>Add
+                          customer
+                  </div></b></big></a>
+
+
+
                 </div>
+
                 <div class="form-group">
-                  <label for="gross_amount" class="col-sm-12 control-label">Time: <?php
-                    date_default_timezone_set("Asia/Manila");
-                   echo date('h:i a') ?></label>
+
                 </div>
 
-                <div class="col-md-4 col-xs-12 pull pull-left">
-
-
-                  <div class="form-group">
-          
-
-                    <!-- MOWDAL -->
-                    <div class="text-center">
-        <?php
-
-$link = mysqli_connect("localhost","root","","stock");
-
-$sql = "SELECT * FROM customer ORDER BY fullname ASC";
-
-$result = mysqli_query($link,$sql);
-if ($result != 0) {
-    echo ' <div class="form-group">';
-    echo ' <label for="exampleFormControlSelect1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Customer information</label>';
-    echo '<select name="custdetails" class="form-control" id="exampleFormControlSelect1" onchange="getCustomerData(1)">';
-    echo '<option value="">WALK-IN</option>';
-    $num_results = mysqli_num_rows($result);
-    for ($i=0;$i<$num_results;$i++) {
-        $row = mysqli_fetch_array($result);
-        $name = $row['fullname'];
-        echo '<option value="' .$name. '">' .$name. '</option>';
-    }
-
-    echo '</select>';
-    
-    echo '</div>';
-}
-mysqli_close($link);
-
-?>
-
-
-  <a href="" class="btn btn-success" data-toggle="modal" data-target="#modalRegisterForm"><big><b>Add customer
-</div></b></big></a>
-
-  
-                    
-                  </div>
-
-                  <div class="form-group">
-                    
-                  </div>
-
-                  <div class="form-group">
-                
-                  </div>
-                </div>
-                
-                
-                <br /> <br/>
-                <table class="table table-bordered" id="product_info_table">
-                  <thead>
-                    <tr>
-                      <th style="width:50%">Product</th>
-                      <th style="width:10%">Qty</th>
-                      <th style="width:10%">Rate</th>
-                      <th style="width:20%">Amount</th>
-                      <th style="width:10%"><button type="button" id="add_row" class="btn btn-default"><i class="fa fa-plus"></i></button></th>
-                    </tr>
-                  </thead>
-
-                   <tbody>
-                     <tr id="row_1">
-                       <td>
-                        <select class="form-control select_group product" data-row-id="row_1" id="product_1" name="product[]" style="width:100%;" onchange="getProductData(1)" required>
-                            <option value=""></option>
-                            <?php foreach ($products as $k => $v): ?>
-                              <option value="<?php echo $v['id'] ?>"><?php echo $v['name'] ?></option>
-                            <?php endforeach ?>
-                          </select>
-                        </td>
-                        <td><input type="text" name="qty[]" id="qty_1" class="form-control" required onkeyup="getTotal(1)"></td>
-                        <td>
-                          <input type="text" name="rate[]" id="rate_1" class="form-control" disabled autocomplete="off">
-                          <input type="hidden" name="rate_value[]" id="rate_value_1" class="form-control" autocomplete="off">
-                        </td>
-                        <td>
-                          <input type="text" name="amount[]" id="amount_1" class="form-control" disabled autocomplete="off">
-                          <input type="hidden" name="amount_value[]" id="amount_value_1" class="form-control" autocomplete="off">
-                        </td>
-                        <td><button type="button" class="btn btn-default" onclick="removeRow('1')"><i class="fa fa-close"></i></button></td>
-                     </tr>
-                   </tbody>
-                </table>
-
-                <br /> <br/>
-
-                <div class="col-md-6 col-xs-12 pull pull-right">
-
-                  <div class="form-group">
-                    <label for="gross_amount" class="col-sm-5 control-label">Gross Amount</label>
-                    <div class="col-sm-7">
-                      <input type="text" class="form-control" id="gross_amount" name="gross_amount" disabled autocomplete="off">
-                      <input type="hidden" class="form-control" id="gross_amount_value" name="gross_amount_value" autocomplete="off">
-                    </div>
-                  </div>
-                  <?php if($is_service_enabled == true): ?>
-                  <div class="form-group">
-                    <label for="service_charge" class="col-sm-5 control-label">S-Charge <?php echo $company_data['service_charge_value'] ?> %</label>
-                    <div class="col-sm-7">
-                      <input type="text" class="form-control" id="service_charge" name="service_charge" disabled autocomplete="off">
-                      <input type="hidden" class="form-control" id="service_charge_value" name="service_charge_value" autocomplete="off">
-                    </div>
-                  </div>
-                  <?php endif; ?>
-                  <?php if($is_vat_enabled == true): ?>
-                  <div class="form-group">
-                    <label for="vat_charge" class="col-sm-5 control-label">Vat <?php echo $company_data['vat_charge_value'] ?> %</label>
-                    <div class="col-sm-7">
-                      <input type="text" class="form-control" id="vat_charge" name="vat_charge" disabled autocomplete="off">
-                      <input type="hidden" class="form-control" id="vat_charge_value" name="vat_charge_value" autocomplete="off">
-                    </div>
-                  </div>
-                  <?php endif; ?>
-                 <div class="form-group">
-                    <label for="Express" class="col-sm-5 control-label">Express</label>
-                    <div class="col-sm-7">
-                      <input type="text" class="form-control" id="Express" name="Express"  placeholder="0" oninput="subAmount(event)" onkeyup="subAmount(event)" required autocomplete="off">
-                    </div>
-                  </div>
-                 <div class="form-group">
-                    <label for="Express" class="col-sm-5 control-label">Remarks</label>
-                    <div class="col-sm-7">
-                      <input type="text" class="form-control" id="Remarks" name="Remarks"  placeholder="Remarks" onkeyup="subAmount()" autocomplete="off">
-                    </div>
-                  </div>
-                   <div class="form-group">
-                    <label for="Staff" class="col-sm-5 control-label">Staff</label>
-                    <div class="col-sm-7">
-                      <input type="text" class="form-control" id="Staff" name="Staff"  placeholder="Staff" value="<?php 
-                      $username = $_SESSION['username'];
-                      echo $username ?>" onkeyup="subAmount()" disabled autocomplete="off">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="net_amount" class="col-sm-5 control-label">Net Amount</label>
-                    <div class="col-sm-7">
-                      <input type="text" class="form-control" id="net_amount" name="net_amount" disabled autocomplete="off">
-                      <input type="hidden" class="form-control" id="net_amount_value" name="net_amount_value" autocomplete="off">
-                    </div>
-                  </div>
+                <div class="form-group">
 
                 </div>
               </div>
-              <!-- /.box-body -->
 
-              <div class="box-footer">
-                <input type="hidden" name="service_charge_rate" value="<?php echo $company_data['service_charge_value'] ?>" autocomplete="off">
-                <input type="hidden" name="vat_charge_rate" value="<?php echo $company_data['vat_charge_value'] ?>" autocomplete="off">
-                <button type="submit" class="btn btn-primary">Create Order</button>
-                <a href="<?php echo base_url('orders/') ?>" class="btn btn-warning">Back</a>
+
+              <br /> <br />
+              <table class="table table-bordered" id="product_info_table">
+                <thead>
+                  <tr>
+                    <th style="width:50%">Product</th>
+                    <th style="width:10%">Qty</th>
+                    <th style="width:10%">Rate</th>
+                    <th style="width:20%">Amount</th>
+                    <th style="width:10%"><button type="button" id="add_row" class="btn btn-default"><i
+                          class="fa fa-plus"></i></button></th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr id="row_1">
+                    <td>
+                      <select class="form-control select_group product" data-row-id="row_1" id="product_1"
+                        name="product[]" style="width:100%;" onchange="getProductData(1)" required>
+                        <option value=""></option>
+                        <?php foreach ($products as $k => $v): ?>
+                          <option value="<?php echo $v['id'] ?>"><?php echo $v['name'] ?></option>
+                        <?php endforeach ?>
+                      </select>
+                    </td>
+                    <td><input type="text" name="qty[]" id="qty_1" class="form-control" required onkeyup="getTotal(1)">
+                    </td>
+                    <td>
+                      <input type="text" name="rate[]" id="rate_1" class="form-control" disabled autocomplete="off">
+                      <input type="hidden" name="rate_value[]" id="rate_value_1" class="form-control"
+                        autocomplete="off">
+                    </td>
+                    <td>
+                      <input type="text" name="amount[]" id="amount_1" class="form-control" disabled autocomplete="off">
+                      <input type="hidden" name="amount_value[]" id="amount_value_1" class="form-control"
+                        autocomplete="off">
+                    </td>
+                    <td><button type="button" class="btn btn-default" onclick="removeRow('1')"><i
+                          class="fa fa-close"></i></button></td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <br /> <br />
+
+              <div class="col-md-6 col-xs-12 pull pull-right">
+
+                <div class="form-group">
+                  <label for="gross_amount" class="col-sm-5 control-label">Gross Amount</label>
+                  <div class="col-sm-7">
+                    <input type="text" class="form-control" id="gross_amount" name="gross_amount" disabled
+                      autocomplete="off">
+                    <input type="hidden" class="form-control" id="gross_amount_value" name="gross_amount_value"
+                      autocomplete="off">
+                  </div>
+                </div>
+                <?php if ($is_service_enabled == true): ?>
+                  <div class="form-group">
+                    <label for="service_charge" class="col-sm-5 control-label">S-Charge
+                      <?php echo $company_data['service_charge_value'] ?> %
+                    </label>
+                    <div class="col-sm-7">
+                      <input type="text" class="form-control" id="service_charge" name="service_charge" disabled
+                        autocomplete="off">
+                      <input type="hidden" class="form-control" id="service_charge_value" name="service_charge_value"
+                        autocomplete="off">
+                    </div>
+                  </div>
+                <?php endif; ?>
+                <?php if ($is_vat_enabled == true): ?>
+                  <div class="form-group">
+                    <label for="vat_charge" class="col-sm-5 control-label">Vat
+                      <?php echo $company_data['vat_charge_value'] ?> %
+                    </label>
+                    <div class="col-sm-7">
+                      <input type="text" class="form-control" id="vat_charge" name="vat_charge" disabled
+                        autocomplete="off">
+                      <input type="hidden" class="form-control" id="vat_charge_value" name="vat_charge_value"
+                        autocomplete="off">
+                    </div>
+                  </div>
+                <?php endif; ?>
+                <div class="form-group">
+                  <label for="Express" class="col-sm-5 control-label">Express</label>
+                  <div class="col-sm-7">
+                    <input type="text" class="form-control" id="Express" name="Express" placeholder="0"
+                      oninput="subAmount(event)" onkeyup="subAmount(event)" required autocomplete="off">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="Express" class="col-sm-5 control-label">Remarks</label>
+                  <div class="col-sm-7">
+                    <input type="text" class="form-control" id="Remarks" name="Remarks" placeholder="Remarks"
+                      onkeyup="subAmount()" autocomplete="off">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="Staff" class="col-sm-5 control-label">Staff</label>
+                  <div class="col-sm-7">
+                    <input type="text" class="form-control" id="Staff" name="Staff" placeholder="Staff" value="<?php
+                    $username = $_SESSION['username'];
+                    echo $username ?>" onkeyup="subAmount()" disabled autocomplete="off">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="net_amount" class="col-sm-5 control-label">Net Amount</label>
+                  <div class="col-sm-7">
+                    <input type="text" class="form-control" id="net_amount" name="net_amount" disabled
+                      autocomplete="off">
+                    <input type="hidden" class="form-control" id="net_amount_value" name="net_amount_value"
+                      autocomplete="off">
+                  </div>
+                </div>
+
               </div>
-            </form>
+            </div>
+            <!-- /.box-body -->
+
+            <div class="box-footer">
+              <input type="hidden" name="service_charge_rate"
+                value="<?php echo $company_data['service_charge_value'] ?>" autocomplete="off">
+              <input type="hidden" name="vat_charge_rate" value="<?php echo $company_data['vat_charge_value'] ?>"
+                autocomplete="off">
+              <button type="submit" class="btn btn-primary">Create Order</button>
+              <a href="<?php echo base_url('orders/') ?>" class="btn btn-warning">Back</a>
+            </div>
+          </form>
           <!-- /.box-body -->
         </div>
         <!-- /.box -->
@@ -307,7 +330,7 @@ mysqli_close($link);
       <!-- col-md-12 -->
     </div>
     <!-- /.row -->
-    
+
 
   </section>
   <!-- /.content -->
@@ -317,58 +340,58 @@ mysqli_close($link);
 <script type="text/javascript">
   var base_url = "<?php echo base_url(); ?>";
 
-  $(document).ready(function() {
+  $(document).ready(function () {
     $(".select_group").select2();
     // $("#description").wysihtml5();
 
     $("#mainOrdersNav").addClass('active');
     $("#addOrderNav").addClass('active');
-    
-    var btnCust = '<button type="button" class="btn btn-secondary" title="Add picture tags" ' + 
-        'onclick="alert(\'Call your custom code here.\')">' +
-        '<i class="glyphicon glyphicon-tag"></i>' +
-        '</button>'; 
-  
+
+    var btnCust = '<button type="button" class="btn btn-secondary" title="Add picture tags" ' +
+      'onclick="alert(\'Call your custom code here.\')">' +
+      '<i class="glyphicon glyphicon-tag"></i>' +
+      '</button>';
+
     // Add new row in the table 
-    $("#add_row").unbind('click').bind('click', function() {
+    $("#add_row").unbind('click').bind('click', function () {
       var table = $("#product_info_table");
       var count_table_tbody_tr = $("#product_info_table tbody tr").length;
       var row_id = count_table_tbody_tr + 1;
 
       $.ajax({
-          url: base_url + '/orders/getTableProductRow/',
-          type: 'post',
-          dataType: 'json',
-          success:function(response) {
-            
-              // console.log(reponse.x);
-               var html = '<tr id="row_'+row_id+'">'+
-                   '<td>'+ 
-                    '<select class="form-control select_group product" data-row-id="'+row_id+'" id="product_'+row_id+'" name="product[]" style="width:100%;" onchange="getProductData('+row_id+')">'+
-                        '<option value=""></option>';
-                        $.each(response, function(index, value) {
-                          html += '<option value="'+value.id+'">'+value.name+'</option>';             
-                        });
-                        
-                      html += '</select>'+
-                    '</td>'+ 
-                    '<td><input type="number" name="qty[]" id="qty_'+row_id+'" class="form-control" onkeyup="getTotal('+row_id+')"></td>'+
-                    '<td><input type="text" name="rate[]" id="rate_'+row_id+'" class="form-control" disabled><input type="hidden" name="rate_value[]" id="rate_value_'+row_id+'" class="form-control"></td>'+
-                    '<td><input type="text" name="amount[]" id="amount_'+row_id+'" class="form-control" disabled><input type="hidden" name="amount_value[]" id="amount_value_'+row_id+'" class="form-control"></td>'+
-                    '<td><button type="button" class="btn btn-default" onclick="removeRow(\''+row_id+'\')"><i class="fa fa-close"></i></button></td>'+
-                    '</tr>';
+        url: base_url + '/orders/getTableProductRow/',
+        type: 'post',
+        dataType: 'json',
+        success: function (response) {
 
-                if(count_table_tbody_tr >= 1) {
-                $("#product_info_table tbody tr:last").after(html);  
-              }
-              else {
-                $("#product_info_table tbody").html(html);
-              }
+          // console.log(reponse.x);
+          var html = '<tr id="row_' + row_id + '">' +
+            '<td>' +
+            '<select class="form-control select_group product" data-row-id="' + row_id + '" id="product_' + row_id + '" name="product[]" style="width:100%;" onchange="getProductData(' + row_id + ')">' +
+            '<option value=""></option>';
+          $.each(response, function (index, value) {
+            html += '<option value="' + value.id + '">' + value.name + '</option>';
+          });
 
-              $(".product").select2();
+          html += '</select>' +
+            '</td>' +
+            '<td><input type="number" name="qty[]" id="qty_' + row_id + '" class="form-control" onkeyup="getTotal(' + row_id + ')"></td>' +
+            '<td><input type="text" name="rate[]" id="rate_' + row_id + '" class="form-control" disabled><input type="hidden" name="rate_value[]" id="rate_value_' + row_id + '" class="form-control"></td>' +
+            '<td><input type="text" name="amount[]" id="amount_' + row_id + '" class="form-control" disabled><input type="hidden" name="amount_value[]" id="amount_value_' + row_id + '" class="form-control"></td>' +
+            '<td><button type="button" class="btn btn-default" onclick="removeRow(\'' + row_id + '\')"><i class="fa fa-close"></i></button></td>' +
+            '</tr>';
 
+          if (count_table_tbody_tr >= 1) {
+            $("#product_info_table tbody tr:last").after(html);
           }
-        });
+          else {
+            $("#product_info_table tbody").html(html);
+          }
+
+          $(".product").select2();
+
+        }
+      });
 
       return false;
     });
@@ -376,12 +399,12 @@ mysqli_close($link);
   }); // /document
 
   function getTotal(row = null) {
-    if(row) {
-      var total = Number($("#rate_value_"+row).val()) * Number($("#qty_"+row).val());
+    if (row) {
+      var total = Number($("#rate_value_" + row).val()) * Number($("#qty_" + row).val());
       total = total.toFixed(2);
-      $("#amount_"+row).val(total);
-      $("#amount_value_"+row).val(total);
-      
+      $("#amount_" + row).val(total);
+      $("#amount_value_" + row).val(total);
+
       subAmount();
 
     } else {
@@ -390,59 +413,58 @@ mysqli_close($link);
   }
 
   // get the product information from the server
-  function getProductData(row_id)
-  {
-    var product_id = $("#product_"+row_id).val();    
-    if(product_id == "") {
-      $("#rate_"+row_id).val("");
-      $("#rate_value_"+row_id).val("");
+  function getProductData(row_id) {
+    var product_id = $("#product_" + row_id).val();
+    if (product_id == "") {
+      $("#rate_" + row_id).val("");
+      $("#rate_value_" + row_id).val("");
 
-      $("#qty_"+row_id).val("");           
+      $("#qty_" + row_id).val("");
 
-      $("#amount_"+row_id).val("");
-      $("#amount_value_"+row_id).val("");
+      $("#amount_" + row_id).val("");
+      $("#amount_value_" + row_id).val("");
 
     } else {
       $.ajax({
         url: base_url + 'orders/getProductValueById',
         type: 'post',
-        data: {product_id : product_id},
+        data: { product_id: product_id },
         dataType: 'json',
-        success:function(response) {
+        success: function (response) {
           // setting the rate value into the rate input field
-          
-          $("#rate_"+row_id).val(response.price);
-          $("#rate_value_"+row_id).val(response.price);
 
-          $("#qty_"+row_id).val(1);
-          $("#qty_value_"+row_id).val(1);
+          $("#rate_" + row_id).val(response.price);
+          $("#rate_value_" + row_id).val(response.price);
+
+          $("#qty_" + row_id).val(1);
+          $("#qty_value_" + row_id).val(1);
 
           var total = Number(response.price) * 1;
           total = total.toFixed(2);
-          $("#amount_"+row_id).val(total);
-          $("#amount_value_"+row_id).val(total);
-          
+          $("#amount_" + row_id).val(total);
+          $("#amount_value_" + row_id).val(total);
+
           subAmount();
         } // /success
       }); // /ajax function to fetch the product data 
     }
   }
-function sleep (time) {
-  return new Promise((resolve) => setTimeout(resolve, time));
-}
+  function sleep(time) {
+    return new Promise((resolve) => setTimeout(resolve, time));
+  }
   // calculate the total amount of the order
- function subAmount(event) {
-    var service_charge = <?php echo ($company_data['service_charge_value'] > 0) ? $company_data['service_charge_value']:0; ?>;
-    var vat_charge = <?php echo ($company_data['vat_charge_value'] > 0) ? $company_data['vat_charge_value']:0; ?>;
+  function subAmount(event) {
+    var service_charge = <?php echo ($company_data['service_charge_value'] > 0) ? $company_data['service_charge_value'] : 0; ?>;
+    var vat_charge = <?php echo ($company_data['vat_charge_value'] > 0) ? $company_data['vat_charge_value'] : 0; ?>;
 
     var tableProductLength = $("#product_info_table tbody tr").length;
     var totalSubAmount = 0;
-    for(x = 0; x < tableProductLength; x++) {
+    for (x = 0; x < tableProductLength; x++) {
       var tr = $("#product_info_table tbody tr")[x];
       var count = $(tr).attr('id');
       count = count.substring(4);
 
-      totalSubAmount = Number(totalSubAmount) + Number($("#amount_"+count).val());
+      totalSubAmount = Number(totalSubAmount) + Number($("#amount_" + count).val());
     } // /for
 
     totalSubAmount = totalSubAmount.toFixed(2);
@@ -452,17 +474,17 @@ function sleep (time) {
     $("#gross_amount_value").val(totalSubAmount);
 
     // vat
-    var vat = (Number($("#gross_amount").val())/100) * vat_charge;
+    var vat = (Number($("#gross_amount").val()) / 100) * vat_charge;
     vat = vat.toFixed(2);
     $("#vat_charge").val(vat);
     $("#vat_charge_value").val(vat);
 
     // service
-    var service = (Number($("#gross_amount").val())/100) * service_charge;
+    var service = (Number($("#gross_amount").val()) / 100) * service_charge;
     service = service.toFixed(2);
     $("#service_charge").val(service);
     $("#service_charge_value").val(service);
-    
+
     // total amount
     var totalAmount = (Number(totalSubAmount) + Number(vat) + Number(service));
     totalAmount = totalAmount.toFixed(2);
@@ -484,19 +506,18 @@ function sleep (time) {
       $("#net_amount_value").val(grandTotal2);
     }
     // alert(value);
-    if(Express) {
-      
+    if (Express) {
+
     } else {
-       // alert("2nd else");
-      
-      
+      // alert("2nd else");
+
+
     }
 
   }// /sub total amount
 
-  function removeRow(tr_id)
-  {
-    $("#product_info_table tbody tr#row_"+tr_id).remove();
+  function removeRow(tr_id) {
+    $("#product_info_table tbody tr#row_" + tr_id).remove();
     subAmount();
   }
 </script>

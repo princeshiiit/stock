@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 class Model_expenses extends CI_Model
 {
@@ -10,7 +10,7 @@ class Model_expenses extends CI_Model
 	/* get the orders data */
 	public function getExpensesData($id = null)
 	{
-		if($id) {
+		if ($id) {
 			$sql = "SELECT * FROM expenses WHERE ID = ?";
 			$query = $this->db->query($sql, array($id));
 			return $query->row_array();
@@ -22,12 +22,12 @@ class Model_expenses extends CI_Model
 	}
 
 	// get the orders item data
-	
 
-	
+
+
 	public function countExpensesItem($order_id)
 	{
-		if($order_id) {
+		if ($order_id) {
 			$sql = "SELECT * FROM expenses WHERE ID = ?";
 			$query = $this->db->query($sql, array($order_id));
 			return $query->num_rows();
