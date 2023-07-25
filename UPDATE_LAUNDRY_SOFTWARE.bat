@@ -6,5 +6,5 @@ set "htdocs_path=C:\xampp\htdocs\stock\"
 REM Change to the htdocs directory
 cd /d "%htdocs_path%"
 
-REM Execute git pull
+REM Execute git pull for stock
 git pull
