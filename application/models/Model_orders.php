@@ -193,7 +193,7 @@ class Model_orders extends CI_Model
 			'Express' => $this->input->post('Express'),
 			'Remarks' => $this->input->post('Remarks'),
 			'Staff' => $_SESSION['username'],
-			'paid_status' => 2,
+			'paid_status' => 1,
 			'user_id' => $user_id
 		);
 		mysqli_close($link);
@@ -239,47 +239,6 @@ class Model_orders extends CI_Model
 			if ($this->db->query($sql4) === TRUE) {
 			}
 
-			//   SELECT product_name, SUM(qty) AS total_amount
-			//   FROM daily_reports
-			//   WHERE product_name = 'DRY11' -- Replace 'John' with the desired name
-			// 	AND DATE(FROM_UNIXTIME(date_time)) = CURRENT_DATE
-			//   GROUP BY product_name;
-			//echo $test;
-//if($test=="112"){
-//$sql3 = "UPDATE machine SET `prod_qty`=prod_qty+$newval WHERE prod_id='101'"; 
-			//    if ($this->db->query($sql3) === TRUE) {
-
-
-
-
-			// }
-
-
-			//}
-//elseif($test=="113")
-//{
-//$sql3 = "UPDATE machine SET `prod_qty`=prod_qty+$newval WHERE prod_id='102'"; 
-			//    if ($this->db->query($sql3) === TRUE) {
-
-
-
-
-			//  }
-
-			//}
-//elseif($test=="114")
-//{
-//$sql3 = "UPDATE machine SET `prod_qty`=prod_qty+$newval WHERE prod_id='103'"; 
-			//    if ($this->db->query($sql3) === TRUE) {
-
-
-
-
-			//  }
-
-			//}
-//else
-//{
 			$sql3 = "UPDATE machine SET `prod_qty`=prod_qty+$newval WHERE prod_id='$test'";
 			if ($this->db->query($sql3) === TRUE) {
 
@@ -316,32 +275,7 @@ class Model_orders extends CI_Model
 
 		return ($order_id) ? $order_id : false;
 	}
-	//public function machine()
-	//{
-
-	//$count_product = count($this->input->post('product'));
-	//  	for($x = 0; $x < $count_product; $x++) {
-	//		$items = array(
-
-	//			$prodid=post('product')[$x],
-
-
-
-
-
-	//		);
-
-
-
-
-
-
-
-
-
-
-
-	//	}
+	
 
 	public function countOrderItem($order_id)
 	{
