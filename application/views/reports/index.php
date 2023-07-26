@@ -120,7 +120,7 @@
       </h4>
       <div class="box-body">
 
-        <table width="100%" id="manageTable" class="table table-bordered table-striped">
+        <table width="100%" id="allOrdersTable" class="table table-bordered table-striped">
 
 
           <thead>
@@ -146,9 +146,9 @@
           <tfoot>
             <tr>
               <th></th>
-              <th>Total Amount:</th>
+              <th>All orders Total Amount:</th>
               <th></th>
-              <th id="totalAmount1">0</th>
+              <th id="AllOrders">0</th>
               <th></th>
               <th></th>
 
@@ -287,27 +287,34 @@
 <script type="text/javascript">
   var manageTable1;
   var base_url = "<?php echo base_url(); ?>";
-
+//current
   $(document).ready(function () {
+  $("#mainOrdersNav").addClass('active');
+  $("#manageOrdersNav").addClass('active');
 
-    $("#mainOrdersNav").addClass('active');
-    $("#manageOrdersNav").addClass('active');
-
-    // initialize the datatable 
-    manageTable1 = $('#manageTable1').DataTable({
-      'ajax': base_url + 'orders/fetchOrdersDataCurrentUser',
-      'order': [],
-      'initComplete': function (settings, json) {
-        // Calculate and update the total amount
-        updateTotalAmount();
-      }
-
-    });
-
-
+  // Initialize the datatable
+  manageTable1 = $('#manageTable1').DataTable({
+    'ajax': base_url + 'orders/fetchOrdersDataCurrentUser',
+    'order': [],
+    "pageLength": 1000,
+    'lengthChange': false,
+    'initComplete': function (settings, json) {
+      // Calculate and update the total amount
+      console.log('initComplete');
+      updateTotalAmount();
+    }
   });
 
-  var manageTable;
+  manageTable1.on('draw.dt', function () {
+    updateTotalAmount();
+  });
+
+  // Initially, update the total amount
+  console.log('Document ready');
+  updateTotalAmount();
+});
+//all orders
+  var allOrdersTable;
   var base_url = "<?php echo base_url(); ?>";
 
   $(document).ready(function () {
@@ -316,15 +323,26 @@
     $("#manageOrdersNav").addClass('active');
 
     // initialize the datatable 
-    manageTable = $('#manageTable').DataTable({
+    allOrdersTable = $('#allOrdersTable').DataTable({
       'ajax': base_url + 'orders/fetchOrdersDataCurrentUser2',
       'order': [],
+      "pageLength": 1000,
+      // 'lengthChange': false,
       'initComplete': function (settings, json) {
-        // Calculate and update the total amount
-        updateTotalAmount();
-      }
+      // Calculate and update the total amount
+      console.log('initComplete');
+      updateTotalAmount();
+    }
+  });
 
-    });
+  allOrdersTable.on('draw.dt', function () {
+    console.log('All Orders');
+    updateTotalAmount();
+  });
+
+  // Initially, update the total amount
+  console.log('Document ready');
+  updateTotalAmount();
 
 
   });
@@ -341,12 +359,23 @@
     manageTableYesterday = $('#manageTableYesterday').DataTable({
       'ajax': base_url + 'orders/fetchOrdersDataCurrentUserYesterday',
       'order': [],
+      "pageLength": 1000,
+      'lengthChange': false,
       'initComplete': function (settings, json) {
-        // Calculate and update the total amount
-        updateTotalAmount();
-      }
+      // Calculate and update the total amount
+      console.log('initComplete');
+      updateTotalAmount();
+    }
+  });
 
-    });
+  manageTableYesterday.on('draw.dt', function () {
+    console.log('manageTableYesterday');
+    updateTotalAmount();
+  });
+
+  // Initially, update the total amount
+  console.log('Document ready');
+  updateTotalAmount();
 
 
   });
@@ -369,28 +398,36 @@
     };
   })();
 
-
   function updateTotalAmount() {
     var total = 0;
-    var data = manageTable1.rows().data();
-    $.each(data, function (index, value) {
-      total += parseFloat(value[3]);
-    });
-    $('#totalAmount').text(total.toFixed(2));
+  var data = manageTable1.rows({ search: 'applied' }).data();
+  $.each(data, function (index, value) {
+    total += parseFloat(value[3]);
+  });
+  $('#totalAmount').text(total.toFixed(2));
+    
+  
 
-    var total = 0;
-    var data = manageTable.rows().data();
-    $.each(data, function (index, value) {
-      total += parseFloat(value[3]);
-    });
-    $('#totalAmount1').text(total.toFixed(2));
-
-    var totalYesterday = 0;
-    var data = manageTableYesterday.rows().data();
+  var totalYesterday = 0;
+    var data = manageTableYesterday.rows({ search: 'applied' }).data();
     $.each(data, function (index, value) {
       totalYesterday += parseFloat(value[3]);
     });
     $('#totalAmountYesterday').text(totalYesterday.toFixed(2));
+
+    var AllOrders = 0;
+    var data = allOrdersTable.rows({ search: 'applied' }).data();
+    $.each(data, function (index, value) {
+      AllOrders += parseFloat(value[3]);
+    });
+    $('#AllOrders').text(AllOrders.toFixed(2));  
+
+  //   var total2 = 0;
+  // var data = manageTable.rows({ search: 'applied' }).data();
+  // $.each(data, function (index, value) {
+  //   total2 += parseFloat(value[3]);
+  // });
+  // $('#totalAmount1').text(total2.toFixed(2));
   }
 
   $(document).ready(function () {

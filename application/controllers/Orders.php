@@ -415,11 +415,11 @@ class Orders extends Admin_Controller
 	public function update($id)
 	{
 		if (!in_array('updateOrder', $this->permission)) {
-			redirect('dashboard', 'refresh');
+			redirect('orders', 'refresh');
 		}
 
 		if (!$id) {
-			redirect('dashboard', 'refresh');
+			redirect('orders', 'refresh');
 		}
 
 		$this->data['page_title'] = 'Update Order';
@@ -559,6 +559,7 @@ class Orders extends Admin_Controller
 							<table style="width:40%"><tr><td style="text-align:center">' . $company_info['company_name'] . '</td></tr></table>
 							<table style="width:40%"><tr><td style="text-align:center">' . $company_info['address'] . '</td></tr></table>
 							<table style="width:40%"><tr><td style="text-align:center">' . $company_info['phone'] . '</td></tr></table><br>
+							<table style="width:40%"><tr><td style="text-align:center"><solid>SERVICE ORDER SLIP</solid></td></tr></table><br>
 							<table style="width:40%"><tr><td style="text-align:left">Date & Time:</td><td style="text-align:right">' . $order_date . '</td></tr></table>
 							<table style="width:40%"><tr><td style="text-align:left">Transaction no. :</td><td style="text-align:right">' . $order_data['id'] . '</td></tr></table>
 							<table style="width:40%"><tr><td style="text-align:left">Cashier name:</td><td style="text-align:right">' . $currentUser . '</td></tr></table>
@@ -575,8 +576,8 @@ class Orders extends Admin_Controller
 											<thead>
 												<tr>
 													<th>Product Name</th>
-													<th>Rate</th>
 													<th>Qty</th>
+													<th>Price</th>
 													<th>Amount</th>
 												</tr>
 											</thead><tbody>';
@@ -588,10 +589,10 @@ class Orders extends Admin_Controller
 				            <td>' . $product_data['name'] . '</td>
 				           
 				            
-				            <td>' . $v['rate'] . '</td>
-				            
-				            
 				            <td>' . $v['qty'] . '</td>
+				            
+				            
+				            <td>' . $v['rate'] . '</td>
 				            
 				            
 				            <td>' . $v['amount'] . '</td>
@@ -608,6 +609,7 @@ class Orders extends Admin_Controller
 													<td colspan="2">
 														<p>
 															Sold items<br>
+															Express Amount<br>
 															Total Amount<br>
 															Status
 														</p>
@@ -616,7 +618,8 @@ class Orders extends Admin_Controller
 													<td>
 														<p>
 															' . $count_items . '<br>
-															' . $order_data['gross_amount'] . '<br>
+															' . $order_data['Express'] . '<br><br>
+															' . $order_data['net_amount'] . '<br>
 															' . $paid_status . '<br>
 														</p>
 														
@@ -624,6 +627,18 @@ class Orders extends Admin_Controller
 												</tr>
 
 										</tbody></table>
+
+							<table style="width:40%"><tr><td style="text-align:left">TYPE OF PAYMENT</td></tr></table>
+							<table style="width:40%"><tr><td style="text-align:left">CASH    &nbsp;&nbsp;&nbsp;_____</td></tr></table>
+							<table style="width:40%"><tr><td style="text-align:left">GCASH   _____</td></tr></table>
+							<table style="width:40%"><tr><td style="text-align:left">CREDIT  _____</td></tr></table><br><br>
+
+
+							<table style="width:40%"><tr><td style="text-align:center">' . $order_data['customer_name'] . '</td></tr></table>
+							<table style="width:40%"><tr><td style="text-align:center">CUSTOMER NAME</td></tr></table>
+							<table style="width:40%"><tr><td style="text-align:center">' . $currentUser . '</td></tr></table>
+							<table style="width:40%"><tr><td style="text-align:center">LAUNDRY ATTENDANT</td></tr></table>
+							<table style="width:40%"><tr><td style="text-align:center">--------------------------------------------------------</td></tr></table>
 										<table style="width:40%">
   <tr>
     <td style="text-align:center; font-size:75%">THIS IS NOT YOUR OFFICIAL RECEIPT, PLEASE ASK FOR YOUR OFFICIAL RECEIPT</td>
