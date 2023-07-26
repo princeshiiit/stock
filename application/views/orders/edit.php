@@ -228,7 +228,6 @@
                   <label for="paid_status" class="col-sm-5 control-label">Paid Status</label>
                   <div class="col-sm-7">
                     <select type="text" class="form-control" id="paid_status" name="paid_status">
-                      <option value="2">Unpaid</option>
                       <option value="1">Paid</option>
 
                     </select>
