@@ -609,7 +609,7 @@ class Orders extends Admin_Controller
 													<td colspan="2">
 														<p>
 															Sold items<br>
-															Express Amount<br>
+															Express<br>
 															Total Amount<br>
 															Status
 														</p>
@@ -618,8 +618,8 @@ class Orders extends Admin_Controller
 													<td>
 														<p>
 															' . $count_items . '<br>
-															' . $order_data['Express'] . '<br><br>
-															' . $order_data['net_amount'] . '<br>
+															' . $order_data['Express'] . '<br>
+															' . $order_data['net_amount'] .'<br>
 															' . $paid_status . '<br>
 														</p>
 														
