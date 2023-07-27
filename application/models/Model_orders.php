@@ -121,7 +121,7 @@ class Model_orders extends CI_Model
 			return $query->row_array();
 		}
 		// $sql = "SELECT * FROM orders_item";
-		$sql = "SELECT product_name, amount, date_time, SUM(qty) AS total_qty, SUM(qty * amount) AS total_val FROM orders_item WHERE DATE(FROM_UNIXTIME(date_time)) = CURRENT_DATE GROUP BY product_name, amount, date_time ORDER BY product_name ASC;";
+		$sql = "SELECT product_name, amount, date_time, SUM(qty) AS total_qty, SUM(qty * amount) AS total_val FROM orders_item GROUP BY product_name, amount, date_time ORDER BY product_name ASC;";
 		$query = $this->db->query($sql);
 		return $query->result_array();
 	}

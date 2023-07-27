@@ -112,13 +112,15 @@
 
 
     </div>
-    <section class="content">
-      <button class="btn btn-success btn-print" onclick="tableToExcel('manageTable', 'All_Orders_Item')"><i
-          class="glyphicon glyphicon-arrow-down"></i>Export Table</button>
-      <h4>
+    
+    <h4>
         All orders
       </h4>
-      <div class="box-body">
+      
+      
+    <div class="box-body">
+      <button class="btn btn-success btn-print" onclick="tableToExcel('manageTable', 'All_Orders_Item')"><i
+          class="glyphicon glyphicon-arrow-down"></i>Export Table</button>
 
         <table width="100%" id="allOrdersTable" class="table table-bordered table-striped">
 
@@ -162,9 +164,10 @@
       </div>
       <?php if ($user_permission): ?>
         <?php if (in_array('deleteOrder', $user_permission)): ?>
-          <div class="box-body">
           <h4>Product Sold Count
     </h4>
+          <div class="box-body">
+          
     <div class="box-body">
       <button class="btn btn-success btn-print"
         onclick="tableToExcel('perItemTable', '<?php echo date('Y/m/d'); ?>')"><i
