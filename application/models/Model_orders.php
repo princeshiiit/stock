@@ -111,6 +111,20 @@ class Model_orders extends CI_Model
 		$query = $this->db->query($sql);
 		return $query->result_array();
 	}
+	//SELECT product_name, SUM(qty) AS total_qty FROM orders_item GROUP BY product_name ORDER BY product_name ASC;
+
+	public function getPerItemOrderCount($id = null)
+	{
+		if ($id) {
+			$sql = "SELECT product_name, amount, date_time, SUM(qty) AS total_qty, SUM(qty * amount) AS total_val FROM orders_item WHERE id = ? GROUP BY product_name, amount, date_time ORDER BY product_name ASC";
+			$query = $this->db->query($sql, array($id));
+			return $query->row_array();
+		}
+		// $sql = "SELECT * FROM orders_item";
+		$sql = "SELECT product_name, amount, date_time, SUM(qty) AS total_qty, SUM(qty * amount) AS total_val FROM orders_item WHERE DATE(FROM_UNIXTIME(date_time)) = CURRENT_DATE GROUP BY product_name, amount, date_time ORDER BY product_name ASC;";
+		$query = $this->db->query($sql);
+		return $query->result_array();
+	}
 
 	public function getVoidedHistory($id = null)
 	{
@@ -196,8 +210,15 @@ class Model_orders extends CI_Model
 			'paid_status' => 1,
 			'user_id' => $user_id
 		);
+
+		$express = array(
+			'express_amount' => $this->input->post('Express'),
+			'date_time' => $timestamp,
+		);
+
 		mysqli_close($link);
 		$insert = $this->db->insert('orders', $data);
+		$this->db->insert('express_items', $express);
 		$order_id = $this->db->insert_id();
 
 		$this->load->model('model_products');

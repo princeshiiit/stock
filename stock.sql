@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jul 21, 2023 at 08:06 AM
+-- Generation Time: Jul 27, 2023 at 11:41 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -138,7 +138,7 @@ CREATE TABLE `company` (
 --
 
 INSERT INTO `company` (`id`, `company_name`, `service_charge_value`, `vat_charge_value`, `address`, `phone`, `country`, `message`, `currency`) VALUES
-(1, 'BLISS WASH LAUNDRY', '0', '0', 'SAMPLE ADDRESS', '00000000', 'philippines', '<b>Welcome</b>', 'PHP');
+(1, 'BLISS WASH LAUNDRY', '0', '0', '2314 Chino Roces Cor Pasay Road Pio del Pilar, 1230 City of Makati NCR Fourth District Philippines, <br>VAT Reg. TIN 007-162-284-00010', '00000000', 'philippines', '<b>Welcome</b>', 'PHP');
 
 -- --------------------------------------------------------
 
@@ -187,6 +187,53 @@ INSERT INTO `customer` (`ID`, `fullname`, `address`, `phone`, `date`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `daily_reports`
+--
+
+CREATE TABLE `daily_reports` (
+  `product_name` varchar(255) NOT NULL,
+  `qty` varchar(255) NOT NULL,
+  `date_time` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `daily_reports`
+--
+
+INSERT INTO `daily_reports` (`product_name`, `qty`, `date_time`) VALUES
+('DRY1', '1', '1689905719'),
+('DRY11', '1', '1689907141'),
+('DRY12', '1', '1689908544'),
+('DRY1', '1', '1690137684'),
+('DRY1', '1', '1690138501'),
+('DELIVERY - 1', '1', '1690139683'),
+('DRY1', '1', '1690142608'),
+('DRY2', '1', '1690144067'),
+('DRY1', '1', '1690160433'),
+('DRY1', '1', '1690162205'),
+('DRY1', '1', '1690222173'),
+('DRY10', '1', '1690222173'),
+('DRY12', '1', '1690222173'),
+('DRY1', '1', '1690332952'),
+('DRY1', '1', '1690333182'),
+('DRY10', '1', '1690333248'),
+('DRY1', '1', '1690333327'),
+('DRY1', '1', '1690333600'),
+('DRY11', '1', '1690333600'),
+('DRY11', '1', '1690333600'),
+('DRY12', '1', '1690333801'),
+('DRY11', '1', '1690333900'),
+('DRY11', '1', '1690334425'),
+('DRY1', '1', '1690342864'),
+('WASH 2', '1', '1690342864'),
+('DRYER1', '1', '1690405248'),
+('DRYER1', '1', '1690405398'),
+('DRYER1', '1', '1690407188'),
+('DRYER1', '1', '1690407188');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `expenses`
 --
 
@@ -197,6 +244,25 @@ CREATE TABLE `expenses` (
   `Amount` int(11) DEFAULT NULL,
   `date` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `express_items`
+--
+
+CREATE TABLE `express_items` (
+  `id` int(11) NOT NULL,
+  `express_amount` varchar(255) NOT NULL,
+  `date_time` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `express_items`
+--
+
+INSERT INTO `express_items` (`id`, `express_amount`, `date_time`) VALUES
+(1, '0', '1690407188');
 
 -- --------------------------------------------------------
 
@@ -258,7 +324,7 @@ INSERT INTO `machine` (`prod_id`, `prod_name`, `prod_desc`, `prod_price`, `prod_
 ('118', 'WASHER9', 'washer', 0.00, 0),
 ('119', 'DRYER10', 'dryer', 0.00, 0),
 ('120', 'WASHER10', 'washer', 0.00, 0),
-('121', 'DRYER11', 'dryer', 0.00, 1),
+('121', 'DRYER11', 'dryer', 0.00, 0),
 ('122', 'WASHER11', 'washer', 0.00, 0),
 ('123', 'DRYER12', 'dryer', 0.00, 0),
 ('124', 'WASHER12', 'washer', 0.00, 0);
@@ -302,6 +368,13 @@ CREATE TABLE `orders` (
   `date` date NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`id`, `bill_no`, `customer_name`, `customer_address`, `customer_phone`, `date_time`, `gross_amount`, `service_charge_rate`, `service_charge`, `vat_charge_rate`, `vat_charge`, `net_amount`, `Express`, `Remarks`, `Staff`, `paid_status`, `user_id`, `slot`, `date`) VALUES
+(1, 'TRANSNO-E87A', '', '', '', '1690407188', '180.00', '0', '0', '0', '0', '180.00', '0', '', 'prince', 1, 1, 0, '2023-07-27');
+
 -- --------------------------------------------------------
 
 --
@@ -320,6 +393,14 @@ CREATE TABLE `orders_item` (
   `date_time` varchar(255) NOT NULL,
   `product_name` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `orders_item`
+--
+
+INSERT INTO `orders_item` (`id`, `order_id`, `product_id`, `qty`, `rate`, `amount`, `slot`, `Staff`, `date_time`, `product_name`) VALUES
+(1, 1, 101, '1', '90', '90.00', 0, 'prince', '1690407188', 'DRYER1'),
+(2, 1, 101, '1', '90', '90.00', 0, 'prince', '1690407188', 'DRYER1');
 
 -- --------------------------------------------------------
 
@@ -350,18 +431,18 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`prime_id`, `id`, `name`, `sku`, `price`, `qty`, `image`, `description`, `attribute_value_id`, `brand_id`, `category_id`, `store_id`, `availability`, `slot`, `qty_used`) VALUES
-(1, '101', 'DRY1', 'D1', '90', '1000', '<p>You did not select a file to upload.</p>', '<p>test</p>', '[\"15\"]', '[\"5\"]', '[\"4\"]', 3, 1, 0, 0),
-(2, '119', 'DRY10', 'D10', '90', '1000', '<p>You did not select a file to upload.</p>', '<p>DRYER</p>', '[\"17\"]', '[\"5\"]', '[\"4\"]', 3, 1, 0, 0),
-(3, '121', 'DRY11', 'D11', '90', '1000', '<p>You did not select a file to upload.</p>', '<p>DRYER</p>', '[\"17\"]', '[\"5\"]', '[\"4\"]', 3, 1, 0, 0),
-(4, '123', 'DRY12', 'D12', '90', '1000', '<p>You did not select a file to upload.</p>', '<p>DRYER</p>', '[\"17\"]', '[\"5\"]', '[\"4\"]', 3, 1, 0, 0),
-(5, '102', 'DRY2', 'D2', '90', '1000', '<p>You did not select a file to upload.</p>', '', '[\"17\"]', '[\"5\"]', '[\"4\"]', 3, 1, 0, 0),
-(6, '103', 'DRY3', 'D3', '90', '1000', '<p>You did not select a file to upload.</p>', '<p>test</p>', '[\"15\"]', '[\"5\"]', '[\"4\"]', 3, 1, 0, 0),
-(7, '104', 'DRY4', 'D4', '90', '1000', '', 'dryer', '[\"15\"]', '[\"5\"]', '[\"4\"]', 3, 1, 0, 0),
-(8, '105', 'DRY5', 'D5', '90', '1000', '', 'DRYER', '[\"15\"]', '[\"5\"]', '[\"4\"]', 3, 1, 0, 0),
-(9, '111', 'DRY6', 'D6', '90', '1000', '<p>You did not select a file to upload.</p>', '<p>DRYER</p>', '[\"17\"]', '[\"5\"]', '[\"4\"]', 3, 1, 0, 0),
-(10, '113', 'DRY 7', 'D7', '90', '1000', '<p>You did not select a file to upload.</p>', '<p>DRYER</p>', '[\"17\"]', '[\"5\"]', '[\"4\"]', 3, 1, 0, 0),
-(11, '115', 'DRY8', 'D8', '90', '1000', '<p>You did not select a file to upload.</p>', '<p>DRYER </p>', '[\"17\"]', '[\"5\"]', '[\"4\"]', 3, 1, 0, 0),
-(12, '117', 'DRY9', 'D9', '90', '1000', '<p>You did not select a file to upload.</p>', '<p>DRYER</p>', '[\"17\"]', '[\"5\"]', '[\"4\"]', 3, 1, 0, 0),
+(1, '101', 'DRYER1', 'D1', '90', '998', '<p>You did not select a file to upload.</p>', '<p>test</p>', '[\"15\"]', '[\"5\"]', '[\"4\"]', 3, 1, 0, 2),
+(2, '119', 'DRYER10', 'D10', '90', '1000', '<p>You did not select a file to upload.</p>', '<p>DRYER</p>', '[\"17\"]', '[\"5\"]', '[\"4\"]', 3, 1, 0, 0),
+(3, '121', 'DRYER11', 'D11', '90', '1000', '<p>You did not select a file to upload.</p>', '<p>DRYER</p>', '[\"17\"]', '[\"5\"]', '[\"4\"]', 3, 1, 0, 0),
+(4, '123', 'DRYER12', 'D12', '90', '1000', '<p>You did not select a file to upload.</p>', '<p>DRYER</p>', '[\"17\"]', '[\"5\"]', '[\"4\"]', 3, 1, 0, 0),
+(5, '102', 'DRYER2', 'D2', '90', '1000', '<p>You did not select a file to upload.</p>', '', '[\"17\"]', '[\"5\"]', '[\"4\"]', 3, 1, 0, 0),
+(6, '103', 'DRYER3', 'D3', '90', '1000', '<p>You did not select a file to upload.</p>', '<p>test</p>', '[\"15\"]', '[\"5\"]', '[\"4\"]', 3, 1, 0, 0),
+(7, '104', 'DRYER4', 'D4', '90', '1000', '', 'dryer', '[\"15\"]', '[\"5\"]', '[\"4\"]', 3, 1, 0, 0),
+(8, '105', 'DRYER5', 'D5', '90', '1000', '', 'DRYER', '[\"15\"]', '[\"5\"]', '[\"4\"]', 3, 1, 0, 0),
+(9, '111', 'DRYER6', 'D6', '90', '1000', '<p>You did not select a file to upload.</p>', '<p>DRYER</p>', '[\"17\"]', '[\"5\"]', '[\"4\"]', 3, 1, 0, 0),
+(10, '113', 'DRYER7', 'D7', '90', '1000', '<p>You did not select a file to upload.</p>', '<p>DRYER</p>', '[\"17\"]', '[\"5\"]', '[\"4\"]', 3, 1, 0, 0),
+(11, '115', 'DRYER8', 'D8', '90', '1000', '<p>You did not select a file to upload.</p>', '<p>DRYER </p>', '[\"17\"]', '[\"5\"]', '[\"4\"]', 3, 1, 0, 0),
+(12, '117', 'DRYER9', 'D9', '90', '1000', '<p>You did not select a file to upload.</p>', '<p>DRYER</p>', '[\"17\"]', '[\"5\"]', '[\"4\"]', 3, 1, 0, 0),
 (13, '1', 'DELIVERY - 1', 'DEL1', '30', '1000', '<p>You did not select a file to upload.</p>', '<p>SERVICE 1</p>', '[\"15\"]', '[\"5\"]', '[\"4\"]', 3, 1, 0, 0),
 (14, '2', 'DELIVERY - 2', 'DEL2', '50', '1000', '<p>You did not select a file to upload.</p>', '<p>SERVICE - 2</p>', '[\"15\"]', '[\"5\"]', '[\"4\"]', 3, 1, 0, 0),
 (15, '3', 'DELIVERY -3', 'DEL3', '100', '1000', '<p>You did not select a file to upload.</p>', '<p>SERVICE - 3</p>', '[\"15\"]', '[\"5\"]', '[\"4\"]', 3, 1, 0, 0),
@@ -381,7 +462,8 @@ INSERT INTO `products` (`prime_id`, `id`, `name`, `sku`, `price`, `qty`, `image`
 (29, '114', 'WASH7', 'W7', '90', '1000', '<p>You did not select a file to upload.</p>', '<p>WASHER</p>', '[\"15\"]', '[\"5\"]', '[\"4\"]', 3, 1, 0, 0),
 (30, '116', 'WASH8', 'W8', '90', '1000', '<p>You did not select a file to upload.</p>', '', '[\"15\"]', '[\"5\"]', '[\"4\"]', 3, 1, 0, 0),
 (31, '118', 'WASH9', 'W9', '90', '1000', '<p>You did not select a file to upload.</p>', '<p>WASHER</p>', '[\"15\"]', '[\"5\"]', '[\"4\"]', 3, 1, 0, 0),
-(32, '124', 'WASH12', 'wash', '90', '1000', '', 'washer', '[\"15\"]', '[\"5\"]', '[\"4\"]', 3, 1, 0, 0);
+(32, '124', 'WASH12', 'wash', '90', '1000', '', 'washer', '[\"15\"]', '[\"5\"]', '[\"4\"]', 3, 1, 0, 0),
+(33, '', 'test', 'DRY100', '100', '1000', '<p>The upload destination folder does not appear to be writable.</p>', '', 'null', 'null', 'null', 3, 1, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -670,6 +752,12 @@ ALTER TABLE `expenses`
   ADD PRIMARY KEY (`ID`);
 
 --
+-- Indexes for table `express_items`
+--
+ALTER TABLE `express_items`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `groups`
 --
 ALTER TABLE `groups`
@@ -746,6 +834,12 @@ ALTER TABLE `expenses`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `express_items`
+--
+ALTER TABLE `express_items`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `groups`
 --
 ALTER TABLE `groups`
@@ -755,13 +849,13 @@ ALTER TABLE `groups`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `prime_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `prime_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `stores`

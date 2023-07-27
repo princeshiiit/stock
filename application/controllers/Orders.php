@@ -188,6 +188,32 @@ class Orders extends Admin_Controller
 		echo json_encode($result);
 	}
 
+	public function fetchOrdersDataPerItem()
+	{
+		$result = array('data' => array());
+
+		$data = $this->model_orders->getPerItemOrderCount();
+
+		foreach ($data as $key => $value) {
+
+			$count_total_item = $this->model_orders->countOrderItem($value['id']);
+			$date = date('Y/m/d', $value['date_time']);
+			// $time = date('h:i:s', $value['date_time']);
+
+			// $date_time = $date . ' ' . $time;
+
+			$result['data'][$key] = array(
+				$value['product_name'],
+				$value['amount'],
+				$value['total_qty'],
+				$value['total_val'],
+				$date,
+			);
+		} // /foreach
+		
+		echo json_encode($result);
+	}
+
 	public function fetchOrdersDataCurrentUser2()
 	{
 		$result = array('data' => array());
