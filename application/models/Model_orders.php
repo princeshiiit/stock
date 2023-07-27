@@ -122,6 +122,15 @@ class Model_orders extends CI_Model
 		}
 		// $sql = "SELECT * FROM orders_item";
 		$sql = "SELECT product_name, amount, date_time, SUM(qty) AS total_qty, SUM(qty * amount) AS total_val FROM orders_item GROUP BY product_name, amount, date_time ORDER BY product_name ASC;";
+	// 	$sql = "SELECT
+	// 	product_name,
+	// 	SUM(amount) AS total_amount,
+	// 	MAX(date_time) AS date_time,
+	// 	SUM(qty) AS total_qty,
+	// 	SUM(qty * amount) AS total_val
+	//   FROM orders_item
+	//   GROUP BY product_name,
+	//   ORDER BY product_name ASC;";
 		$query = $this->db->query($sql);
 		return $query->result_array();
 	}
@@ -301,8 +310,8 @@ class Model_orders extends CI_Model
 	public function countOrderItem($order_id)
 	{
 		if ($order_id) {
-			$sql = "SELECT * FROM orders_item WHERE order_id = ?";
-			$query = $this->db->query($sql, array($order_id));
+			$sql = "SELECT * FROM orders_item WHERE order_id = $order_id";
+			$query = $this->db->query($sql);
 			return $query->num_rows();
 		}
 

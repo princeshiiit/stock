@@ -61,27 +61,27 @@
 
                 <div class="form-group">
                   <label for="product_name">Product name</label>
-                  <input type="text" class="form-control" id="product_name" name="product_name" placeholder="Enter product name" value="<?php echo $product_data['name']; ?>"  autocomplete="off"/>
+                  <input required type="text" class="form-control" id="product_name" name="product_name" placeholder="Enter product name" value="<?php echo $product_data['name']; ?>"  autocomplete="off"/>
                 </div>
 
                 <div class="form-group">
                   <label for="sku">SKU</label>
-                  <input type="text" class="form-control" id="sku" name="sku" placeholder="Enter sku" value="<?php echo $product_data['sku']; ?>" autocomplete="off" />
+                  <input required type="text" class="form-control" id="sku" name="sku" placeholder="Enter sku" value="<?php echo $product_data['sku']; ?>" autocomplete="off" />
                 </div>
 
                 <div class="form-group">
                   <label for="price">Price</label>
-                  <input type="text" class="form-control" id="price" name="price" placeholder="Enter price" value="<?php echo $product_data['price']; ?>" autocomplete="off" />
+                  <input required type="text" class="form-control" id="price" name="price" placeholder="Enter price" value="<?php echo $product_data['price']; ?>" autocomplete="off" />
                 </div>
 
                 <div class="form-group">
                   <label for="qty">Qty</label>
-                  <input type="number" class="form-control" id="qty" name="qty" placeholder="Enter Qty" value="<?php echo $product_data['qty']; ?>" autocomplete="off" min="1" max="1000"/>
+                  <input required type="number" class="form-control" id="qty" name="qty" placeholder="Enter Qty" value="<?php echo $product_data['qty']; ?>" autocomplete="off" min="1" max="1000"/>
                 </div>
 
                 <div class="form-group">
                   <label for="description">Description</label>
-                  <textarea type="text" class="form-control" id="description" name="description" placeholder="Enter 
+                  <textarea required type="text" class="form-control" id="description" name="description" placeholder="Enter 
                   description" autocomplete="off">
                     <?php echo $product_data['description']; ?>
                   </textarea>
@@ -92,7 +92,7 @@
                   <?php foreach ($attributes as $k => $v): ?>
                     <div class="form-group">
                       <label for="groups"><?php echo $v['attribute_data']['name'] ?></label>
-                      <select class="form-control select_group" id="attributes_value_id" name="attributes_value_id[]" multiple="multiple">
+                      <select required class="form-control select_group" id="attributes_value_id" name="attributes_value_id[]" multiple="multiple">
                         <?php foreach ($v['attribute_value'] as $k2 => $v2): ?>
                           <option value="<?php echo $v2['id'] ?>" <?php if(in_array($v2['id'], $attribute_id)) { echo "selected"; } ?>><?php echo $v2['value'] ?></option>
                         <?php endforeach ?>
@@ -104,7 +104,7 @@
                 <div class="form-group">
                   <label for="brands">Brands</label>
                   <?php $brand_data = json_decode($product_data['brand_id']); ?>
-                  <select class="form-control select_group" id="brands" name="brands[]" multiple="multiple">
+                  <select required class="form-control select_group" id="brands" name="brands[]" multiple="multiple">
                     <?php foreach ($brands as $k => $v): ?>
                       <option value="<?php echo $v['id'] ?>" <?php if(in_array($v['id'], $brand_data)) { echo 'selected="selected"'; } ?>><?php echo $v['name'] ?></option>
                     <?php endforeach ?>
@@ -114,7 +114,7 @@
                 <div class="form-group">
                   <label for="category">Category</label>
                   <?php $category_data = json_decode($product_data['category_id']); ?>
-                  <select class="form-control select_group" id="category" name="category[]" multiple="multiple">
+                  <select required class="form-control select_group" id="category" name="category[]" multiple="multiple">
                     <?php foreach ($category as $k => $v): ?>
                       <option value="<?php echo $v['id'] ?>" <?php if(in_array($v['id'], $category_data)) { echo 'selected="selected"'; } ?>><?php echo $v['name'] ?></option>
                     <?php endforeach ?>
@@ -132,7 +132,7 @@
 
                 <div class="form-group">
                   <label for="store">Availability</label>
-                  <select class="form-control" id="availability" name="availability">
+                  <select required class="form-control" id="availability" name="availability">
                     <option value="1" <?php if($product_data['availability'] == 1) { echo "selected='selected'"; } ?>>Yes</option>
                     <option value="2" <?php if($product_data['availability'] != 1) { echo "selected='selected'"; } ?>>No</option>
                   </select>
