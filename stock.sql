@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jul 27, 2023 at 11:41 AM
+-- Generation Time: Jul 27, 2023 at 05:52 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -257,11 +257,6 @@ CREATE TABLE `express_items` (
   `date_time` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `express_items`
---
-
-
 -- --------------------------------------------------------
 
 --
@@ -366,11 +361,6 @@ CREATE TABLE `orders` (
   `date` date NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
---
--- Dumping data for table `orders`
---
-
-
 -- --------------------------------------------------------
 
 --
@@ -387,14 +377,9 @@ CREATE TABLE `orders_item` (
   `slot` int(255) NOT NULL,
   `Staff` varchar(255) NOT NULL,
   `date_time` varchar(255) NOT NULL,
+  `date_only` varchar(255) NOT NULL,
   `product_name` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Dumping data for table `orders_item`
---
-
-
 
 -- --------------------------------------------------------
 
@@ -437,7 +422,7 @@ INSERT INTO `products` (`prime_id`, `id`, `name`, `sku`, `price`, `qty`, `image`
 (10, '113', 'DRYER7', 'D7', '90', '1000', '<p>You did not select a file to upload.</p>', '<p>DRYER</p>', '[\"17\"]', '[\"5\"]', '[\"4\"]', 3, 1, 0, 0),
 (11, '115', 'DRYER8', 'D8', '90', '1000', '<p>You did not select a file to upload.</p>', '<p>DRYER </p>', '[\"17\"]', '[\"5\"]', '[\"4\"]', 3, 1, 0, 0),
 (12, '117', 'DRYER9', 'D9', '90', '1000', '<p>You did not select a file to upload.</p>', '<p>DRYER</p>', '[\"17\"]', '[\"5\"]', '[\"4\"]', 3, 1, 0, 0),
-(13, '1', 'DELIVERY - 1', 'DEL1', '30', '1000', '<p>You did not select a file to upload.</p>', '<p>SERVICE 1</p>', '[\"15\"]', '[\"5\"]', '[\"4\"]', 3, 1, 0, 0),
+(13, '2CC2', 'DELIVERY - 1', 'DEL1', '30', '1000', '<p>You did not select a file to upload.</p>', '<p>SERVICE 1</p>', '[\"16\"]', '[\"5\"]', '[\"4\"]', 3, 1, 0, 0),
 (14, '2', 'DELIVERY - 2', 'DEL2', '50', '1000', '<p>You did not select a file to upload.</p>', '<p>SERVICE - 2</p>', '[\"15\"]', '[\"5\"]', '[\"4\"]', 3, 1, 0, 0),
 (15, '3', 'DELIVERY -3', 'DEL3', '100', '1000', '<p>You did not select a file to upload.</p>', '<p>SERVICE - 3</p>', '[\"15\"]', '[\"5\"]', '[\"4\"]', 3, 1, 0, 0),
 (16, '4', 'FABCON', 'FC', '15', '1000', '<p>You did not select a file to upload.</p>', '<p>FABRIC CONDITIONER</p>', '[\"15\"]', '[\"5\"]', '[\"4\"]', 3, 1, 0, 0),
@@ -469,11 +454,6 @@ CREATE TABLE `resetstamp` (
   `machine` varchar(255) NOT NULL,
   `DateTime` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `resetstamp`
---
-
 
 -- --------------------------------------------------------
 
@@ -642,6 +622,9 @@ ALTER TABLE `groups`
 ALTER TABLE `orders`
   ADD PRIMARY KEY (`id`);
 
+--
+-- Indexes for table `orders_item`
+--
 ALTER TABLE `orders_item`
   ADD PRIMARY KEY (`order_id`);
 
@@ -713,7 +696,7 @@ ALTER TABLE `expenses`
 -- AUTO_INCREMENT for table `express_items`
 --
 ALTER TABLE `express_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `groups`
@@ -725,9 +708,13 @@ ALTER TABLE `groups`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
-  ALTER TABLE `orders_item`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `orders_item`
+--
+ALTER TABLE `orders_item`
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `products`
