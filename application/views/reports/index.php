@@ -16,12 +16,38 @@
     <!-- <button class = "btn btn-success btn-print" onclick="tableToExcel('manageTable1', 'reports')"><i class ="glyphicon glyphicon-arrow-down"></i>Export Shift Report</button> -->
 
 
+    <h4>Express Orders
+    </h4>
+    <div class="box-body">
+      <button class="btn btn-success btn-print" onclick="tableToExcel('expressTable', '<?php echo date('Y/m/d'); ?>')"><i class="glyphicon glyphicon-arrow-down"></i>Export Current Report</button>
+      <table width="100%" id="expressTable" class="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th>Transaction No.</th>
+            <th>DateTime</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+
+
+        </tbody>
+        <tfoot>
+          <tr>
+            <th></th>
+            <th>Total Express Amount:</th>
+            <th id="expressTotalAmount">0</th>
+          </tr>
+        </tfoot>
+      </table>
+
+
+
+    </div>
     <h4>Current Orders
     </h4>
     <div class="box-body">
-      <button class="btn btn-success btn-print"
-        onclick="tableToExcel('manageTable1', '<?php echo date('Y/m/d'); ?>')"><i
-          class="glyphicon glyphicon-arrow-down"></i>Export Current Report</button>
+      <button class="btn btn-success btn-print" onclick="tableToExcel('manageTable1', '<?php echo date('Y/m/d'); ?>')"><i class="glyphicon glyphicon-arrow-down"></i>Export Current Report</button>
 
       <table width="100%" id="manageTable1" class="table table-bordered table-striped">
 
@@ -67,9 +93,7 @@
     <h4>Yesterday Orders
     </h4>
     <div class="box-body">
-      <button class="btn btn-success btn-print"
-        onclick="tableToExcel('manageTable1', '<?php echo date('Y/m/d', strtotime('-1 day', strtotime(date('Y/m/d')))); ?>')"><i
-          class="glyphicon glyphicon-arrow-down"></i>Export Yesterday Report</button>
+      <button class="btn btn-success btn-print" onclick="tableToExcel('manageTable1', '<?php echo date('Y/m/d', strtotime('-1 day', strtotime(date('Y/m/d')))); ?>')"><i class="glyphicon glyphicon-arrow-down"></i>Export Yesterday Report</button>
 
       <table width="100%" id="manageTableYesterday" class="table table-bordered table-striped">
 
@@ -112,80 +136,28 @@
 
 
     </div>
-    
+
     <h4>
-        All orders
-      </h4>
-      
-      
-    <div class="box-body">
-      <button class="btn btn-success btn-print" onclick="tableToExcel('manageTable', 'All_Orders_Item')"><i
-          class="glyphicon glyphicon-arrow-down"></i>Export Table</button>
-
-        <table width="100%" id="allOrdersTable" class="table table-bordered table-striped">
-
-
-          <thead>
-            <tr>
-              <th>Transaction No.</th>
-              <th>Item No.</th>
-              <th>Product Name</th>
-              <th>Amount</th>
-              <th>Rate</th>
-              <th>Quantity</th>
-              <th>Cashier</th>
-              <th>Date and Time (Day/Month/Year)</th>
-
-
-            </tr>
-
-          </thead>
-          <tbody>
-
-
-          </tbody>
-
-          <tfoot>
-            <tr>
-              <th></th>
-              <th>All orders Total Amount:</th>
-              <th></th>
-              <th id="AllOrders">0</th>
-              <th></th>
-              <th></th>
-
-
-            </tr>
-          </tfoot>
-
-        </table>
-
-
-      </div>
-      <?php if ($user_permission): ?>
-        <?php if (in_array('deleteOrder', $user_permission)): ?>
-          <h4>Product Sold Count
+      All orders
     </h4>
-          <div class="box-body">
-          
-    <div class="box-body">
-      <button class="btn btn-success btn-print"
-        onclick="tableToExcel('perItemTable', '<?php echo date('Y/m/d'); ?>')"><i
-          class="glyphicon glyphicon-arrow-down"></i>Export Current Report</button>
 
-      <table width="100%" id="perItemTable" class="table table-bordered table-striped">
+
+    <div class="box-body">
+      <button class="btn btn-success btn-print" onclick="tableToExcel('manageTable', 'All_Orders_Item')"><i class="glyphicon glyphicon-arrow-down"></i>Export Table</button>
+
+      <table width="100%" id="allOrdersTable" class="table table-bordered table-striped">
 
 
         <thead>
           <tr>
-
+            <th>Transaction No.</th>
+            <th>Item No.</th>
             <th>Product Name</th>
-            <th>Price</th>
-            <th>QTY</th>
-            <th>Total Amount</th>
-            <th>Date</th>
-            <!-- <th></th> -->
-            
+            <th>Amount</th>
+            <th>Rate</th>
+            <th>Quantity</th>
+            <th>Cashier</th>
+            <th>Date and Time (Day/Month/Year)</th>
 
 
           </tr>
@@ -196,101 +168,188 @@
 
         </tbody>
 
-        <!-- <tfoot>
+        <tfoot>
           <tr>
             <th></th>
-            <th>Total Amount:</th>
+            <th>All orders Total Amount:</th>
             <th></th>
-            <th id="totalAmount">0</th>
+            <th id="AllOrders">0</th>
             <th></th>
             <th></th>
 
 
           </tr>
-        </tfoot> -->
+        </tfoot>
 
       </table>
 
 
     </div>
+    <?php if ($user_permission) : ?>
+      <?php if (in_array('deleteOrder', $user_permission)) : ?>
+        <h4>Product Sold Count
+        </h4>
+        <div class="box-body">
+
+          <div class="box-body">
+            <button class="btn btn-success btn-print" onclick="tableToExcel('perItemTable', '<?php echo date('Y/m/d'); ?>')"><i class="glyphicon glyphicon-arrow-down"></i>Export Products Report</button>
+
+            <table width="100%" id="perItemTable" class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th>Product Name</th>
+                  <th>Price</th>
+                  <th>QTY</th>
+                  <th>Total Amount</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody>
+
+
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th></th>
+                  <th></th>
+                  <th>Total Amount</th>
+                  <th id="perItemTotalAmount">0</th>
+                  <th></th>
+                </tr>
+              </tfoot>
+            </table>
+
 
 
           </div>
 
-        <?php endif; ?>
+
+        </div>
+
       <?php endif; ?>
-      <!-- Small boxes (Stat box) -->
+    <?php endif; ?>
+    <!-- Small boxes (Stat box) -->
 
-      <!-- /.row -->
+    <!-- /.row -->
 
 
-    </section>
-    <!-- /.content -->
+  </section>
+  <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
 
 <script type="text/javascript">
+  $(document).ready(function() {
+    // Initialize the datatable
+    var expressTable = $('#expressTable').DataTable({
+      'ajax': {
+        'url': base_url + 'orders/fetchOrdersDataExpress',
+        'dataSrc': 'data' // The key in the JSON data where the array of rows is located
+      },
+      'columns': [{
+          'title': 'Transaction No.',
+          'data': 0
+        },
+        {
+          'title': 'DateTime',
+          'data': 1
+        },
+        {
+          'title': 'Amount',
+          'data': 2
+        }
+      ],
+      'order': [],
+      'footerCallback': function(tfoot, data, start, end, display) {
+        // Calculate and update the total amount
+        var totalAmount = data
+          .slice(start, end)
+          .reduce(function(sum, row) {
+            return sum + parseFloat(row[2]);
+          }, 0);
+        $(tfoot).find('#expressTotalAmount').text(totalAmount.toFixed(2));
+      }
+    });
+  });
+
   var manageTable1;
   var base_url = "<?php echo base_url(); ?>";
-//current
-  $(document).ready(function () {
-  $("#mainOrdersNav").addClass('active');
-  $("#manageOrdersNav").addClass('active');
+  //current
+  $(document).ready(function() {
+    $("#mainOrdersNav").addClass('active');
+    $("#manageOrdersNav").addClass('active');
 
-  // Initialize the datatable
-  manageTable1 = $('#manageTable1').DataTable({
-    'ajax': base_url + 'orders/fetchOrdersDataCurrentUser',
-    'order': [],
-    "pageLength": 1000,
-    'lengthChange': false,
-    'initComplete': function (settings, json) {
-      // Calculate and update the total amount
-      console.log('initComplete');
+    // Initialize the datatable
+    manageTable1 = $('#manageTable1').DataTable({
+      'ajax': base_url + 'orders/fetchOrdersDataCurrentUser',
+      'order': [],
+      "pageLength": 1000,
+      'lengthChange': false,
+      'initComplete': function(settings, json) {
+        // Calculate and update the total amount
+        console.log('initComplete');
+        updateTotalAmount();
+      }
+    });
+
+    manageTable1.on('draw.dt', function() {
       updateTotalAmount();
-    }
-  });
+    });
 
-  manageTable1.on('draw.dt', function () {
+    // Initially, update the total amount
+    console.log('Document ready');
     updateTotalAmount();
   });
 
-  // Initially, update the total amount
-  console.log('Document ready');
-  updateTotalAmount();
-});
-
-var perItemTable;
+  var perItemTable;
   var base_url = "<?php echo base_url(); ?>";
-//current
-  $(document).ready(function () {
-  $("#mainOrdersNav").addClass('active');
-  $("#manageOrdersNav").addClass('active');
-
-  // Initialize the datatable
-  perItemTable = $('#perItemTable').DataTable({
-    'ajax': base_url + 'orders/fetchOrdersDataPerItem',
-    'order': [],
-    'initComplete': function (settings, json) {
-      // Calculate and update the total amount
-      // console.log(json);
-      updateTotalAmount();
-    }
+  //current
+  $(document).ready(function() {
+    // Initialize the datatable
+    var perItemTable = $('#perItemTable').DataTable({
+      'ajax': {
+        'url': base_url + 'orders/fetchOrdersDataPerItem',
+        'dataSrc': 'data' // The key in the JSON data where the array of rows is located
+      },
+      'columns': [{
+          'title': 'Product Name',
+          'data': 0
+        },
+        {
+          'title': 'Price',
+          'data': 1
+        },
+        {
+          'title': 'QTY',
+          'data': 2
+        },
+        {
+          'title': 'Total Amount',
+          'data': 3
+        },
+        {
+          'title': 'Date',
+          'data': 4
+        }
+      ],
+      'order': [],
+      'footerCallback': function(tfoot, data, start, end, display) {
+        // Calculate and update the total amount
+        var totalAmount = data
+          .slice(start, end)
+          .reduce(function(sum, row) {
+            return sum + parseFloat(row[3]);
+          }, 0);
+        $(tfoot).find('#perItemTotalAmount').text(totalAmount.toFixed(2));
+      }
+    });
   });
 
-  perItemTable.on('draw.dt', function () {
-    console.log("PERITEMTABLE>>>");
-    updateTotalAmount();
-  });
-
-  // Initially, update the total amount
-  console.log('Document ready');
-  updateTotalAmount();
-});
-//all orders
+  //all orders
   var allOrdersTable;
   var base_url = "<?php echo base_url(); ?>";
 
-  $(document).ready(function () {
+  $(document).ready(function() {
 
     $("#mainOrdersNav").addClass('active');
     $("#manageOrdersNav").addClass('active');
@@ -301,21 +360,21 @@ var perItemTable;
       'order': [],
       "pageLength": 1000,
       // 'lengthChange': false,
-      'initComplete': function (settings, json) {
-      // Calculate and update the total amount
-      console.log('initComplete');
+      'initComplete': function(settings, json) {
+        // Calculate and update the total amount
+        console.log('initComplete');
+        updateTotalAmount();
+      }
+    });
+
+    allOrdersTable.on('draw.dt', function() {
+      console.log('All Orders');
       updateTotalAmount();
-    }
-  });
+    });
 
-  allOrdersTable.on('draw.dt', function () {
-    console.log('All Orders');
+    // Initially, update the total amount
+    console.log('Document ready');
     updateTotalAmount();
-  });
-
-  // Initially, update the total amount
-  console.log('Document ready');
-  updateTotalAmount();
 
 
   });
@@ -323,7 +382,7 @@ var perItemTable;
   var manageTableYesterday;
   var base_url = "<?php echo base_url(); ?>";
 
-  $(document).ready(function () {
+  $(document).ready(function() {
 
     $("#mainOrdersNav").addClass('active');
     $("#manageOrdersNav").addClass('active');
@@ -334,34 +393,43 @@ var perItemTable;
       'order': [],
       "pageLength": 1000,
       'lengthChange': false,
-      'initComplete': function (settings, json) {
-      // Calculate and update the total amount
-      console.log('initComplete');
+      'initComplete': function(settings, json) {
+        // Calculate and update the total amount
+        console.log('initComplete');
+        updateTotalAmount();
+      }
+    });
+
+    manageTableYesterday.on('draw.dt', function() {
+      console.log('manageTableYesterday');
       updateTotalAmount();
-    }
-  });
+    });
 
-  manageTableYesterday.on('draw.dt', function () {
-    console.log('manageTableYesterday');
+    // Initially, update the total amount
+    console.log('Document ready');
     updateTotalAmount();
-  });
-
-  // Initially, update the total amount
-  console.log('Document ready');
-  updateTotalAmount();
 
 
   });
 
-  var tableToExcel = (function () {
+  var tableToExcel = (function() {
     var uri = 'data:application/vnd.ms-excel;base64,';
     var template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}<tfoot></tfoot></table></body></html>';
-    var base64 = function (s) { return window.btoa(unescape(encodeURIComponent(s))); }
-    var format = function (s, c) { return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; }); }
+    var base64 = function(s) {
+      return window.btoa(unescape(encodeURIComponent(s)));
+    }
+    var format = function(s, c) {
+      return s.replace(/{(\w+)}/g, function(m, p) {
+        return c[p];
+      });
+    }
 
-    return function (table, name) {
+    return function(table, name) {
       if (!table.nodeType) table = document.getElementById(table);
-      var ctx = { worksheet: name || "Reports", table: table.innerHTML }; // Use the provided name or default to "Reports"
+      var ctx = {
+        worksheet: name || "Reports",
+        table: table.innerHTML
+      }; // Use the provided name or default to "Reports"
       var filename = (name || "Reports") + ".xls"; // Default filename with .xls extension
 
       var link = document.createElement("a");
@@ -371,64 +439,77 @@ var perItemTable;
     };
   })();
 
-  function updateTotalAmount() {
-    var total = 0;
-  var data = manageTable1.rows({ search: 'applied' }).data();
-  $.each(data, function (index, value) {
-    total += parseFloat(value[3]);
-  });
-  $('#totalAmount').text(total.toFixed(2));
-    
-  
+  // function updateTotalAmount2() {
+  //   var express = 0;
+  // var data1 = expressTable.rows({ search: 'applied' }).data();
+  // $.each(data1, function (index, value) {
+  //   express += parseFloat(value[2]);
+  // });
+  // $('#expressTotalAmount').text(express.toFixed(2));
+  // }
 
-  var totalYesterday = 0;
-    var data = manageTableYesterday.rows({ search: 'applied' }).data();
-    $.each(data, function (index, value) {
+  function updateTotalAmount() {
+    //   var express = 0;
+    // var data = expressTable.rows({ search: 'applied' }).data();
+    // $.each(data, function (index, value) {
+    //   express += parseFloat(value[2]);
+    // });
+    // $('#expressTotalAmount').text(express.toFixed(2));
+
+    var total = 0;
+    var data1 = manageTable1.rows({
+      search: 'applied'
+    }).data();
+    $.each(data1, function(index, value) {
+      total += parseFloat(value[3]);
+    });
+    $('#totalAmount').text(total.toFixed(2));
+
+
+
+    var totalYesterday = 0;
+    var dataYesterday = manageTableYesterday.rows({
+      search: 'applied'
+    }).data();
+    $.each(dataYesterday, function(index, value) {
       totalYesterday += parseFloat(value[3]);
     });
     $('#totalAmountYesterday').text(totalYesterday.toFixed(2));
 
     var AllOrders = 0;
-    var data = allOrdersTable.rows({ search: 'applied' }).data();
-    $.each(data, function (index, value) {
+    var dataAllOrders = allOrdersTable.rows({
+      search: 'applied'
+    }).data();
+    $.each(dataAllOrders, function(index, value) {
       AllOrders += parseFloat(value[3]);
     });
-    $('#AllOrders').text(AllOrders.toFixed(2));  
-
-  //   var total2 = 0;
-  // var data = manageTable.rows({ search: 'applied' }).data();
-  // $.each(data, function (index, value) {
-  //   total2 += parseFloat(value[3]);
-  // });
-  // $('#totalAmount1').text(total2.toFixed(2));
+    $('#AllOrders').text(AllOrders.toFixed(2));
   }
 
-  $(document).ready(function () {
+  $(document).ready(function() {
     $("#reportNav").addClass('active');
   });
 
   var report_data = <?php echo '[' . implode(',', $results) . ']'; ?>;
 
 
-  $(function () {
+  $(function() {
     /* ChartJS
      * -------
      * Here we will create a few charts using ChartJS
      */
     var areaChartData = {
       labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-      datasets: [
-        {
-          label: 'Electronics',
-          fillColor: 'rgba(210, 214, 222, 1)',
-          strokeColor: 'rgba(210, 214, 222, 1)',
-          pointColor: 'rgba(210, 214, 222, 1)',
-          pointStrokeColor: '#c1c7d1',
-          pointHighlightFill: '#fff',
-          pointHighlightStroke: 'rgba(220,220,220,1)',
-          data: report_data
-        }
-      ]
+      datasets: [{
+        label: 'Electronics',
+        fillColor: 'rgba(210, 214, 222, 1)',
+        strokeColor: 'rgba(210, 214, 222, 1)',
+        pointColor: 'rgba(210, 214, 222, 1)',
+        pointStrokeColor: '#c1c7d1',
+        pointHighlightFill: '#fff',
+        pointHighlightStroke: 'rgba(220,220,220,1)',
+        data: report_data
+      }]
     }
 
     //-------------
