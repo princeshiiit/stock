@@ -197,17 +197,17 @@ class Orders extends Admin_Controller
 		foreach ($data as $key => $value) {
 
 			$count_total_item = $this->model_orders->countOrderItem($value['id']);
-			$date = date('Y/m/d', $value['date_time']);
+			$date = date('Y/m/d', $value['date']);
 			// $time = date('h:i:s', $value['date_time']);
 
 			// $date_time = $date . ' ' . $time;
 
 			$result['data'][$key] = array(
 				$value['product_name'],
-				$value['amount'],
-				$value['total_qty'],
-				$value['total_val'],
-				$date,
+				$value['rate'],
+				$value['total_count'],
+				$value['total_amount'],
+				$value['date_time'],
 			);
 		} // /foreach
 		

@@ -115,22 +115,32 @@ class Model_orders extends CI_Model
 
 	public function getPerItemOrderCount($id = null)
 	{
-		if ($id) {
-			$sql = "SELECT product_name, amount, date_time, SUM(qty) AS total_qty, SUM(qty * amount) AS total_val FROM orders_item WHERE id = ? GROUP BY product_name, amount, date_time ORDER BY product_name ASC";
-			$query = $this->db->query($sql, array($id));
-			return $query->row_array();
-		}
+		// if ($id) {
+		// 	$sql = "SELECT product_name, amount, date_only, SUM(qty) AS total_qty, SUM(qty * amount) AS total_val FROM orders_item WHERE id = ? GROUP BY product_name, amount, date_only ORDER BY product_name ASC";
+		// 	$query = $this->db->query($sql, array($id));
+		// 	return $query->row_array();
+		// }
 		// $sql = "SELECT * FROM orders_item";
-		$sql = "SELECT product_name, amount, date_time, SUM(qty) AS total_qty, SUM(qty * amount) AS total_val FROM orders_item GROUP BY product_name, amount, date_time ORDER BY product_name ASC;";
-	// 	$sql = "SELECT
-	// 	product_name,
-	// 	SUM(amount) AS total_amount,
-	// 	MAX(date_time) AS date_time,
-	// 	SUM(qty) AS total_qty,
-	// 	SUM(qty * amount) AS total_val
-	//   FROM orders_item
-	//   GROUP BY product_name,
-	//   ORDER BY product_name ASC;";
+		// $sql = "SELECT product_name, amount, date_only, SUM(qty) AS total_qty, SUM(qty * amount) AS total_val FROM orders_item GROUP BY product_name, date_only ORDER BY product_name ASC;";
+		$sql = "WITH Summary AS (
+			SELECT
+			  product_name,
+			  DATE(FROM_UNIXTIME(date_time)) AS date,
+			  rate,
+			  SUM(qty) AS total_count,
+			  rate AS rate_value
+			FROM orders_item
+			GROUP BY product_name, DATE(FROM_UNIXTIME(date_time)), rate
+		  )
+		  SELECT
+			product_name,
+			DATE(date) AS date_time,
+			rate,
+			SUM(total_count) AS total_count,
+			SUM(total_count * rate_value) AS total_amount
+		  FROM Summary
+		  GROUP BY product_name, DATE(date), rate;
+		  ";
 		$query = $this->db->query($sql);
 		return $query->result_array();
 	}
@@ -199,6 +209,9 @@ class Model_orders extends CI_Model
 		$currentDate = date('Y/m/d h:i:s'); // Get the current date in the format: Year-Month-Day
 		$timestamp = strtotime($currentDate);
 
+		$currentDateOnly = date('Y/m/d'); // Get the current date in the format: Year-Month-Day
+		$dateOnly = strtotime($currentDateOnly);
+
 		// $today = strtotime($todays_date,"-14 hours");
 		$bill_no = 'TRANSNO-' . strtoupper(substr(md5(uniqid(mt_rand(), true)), 0, 4));
 		$data = array(
@@ -245,6 +258,7 @@ class Model_orders extends CI_Model
 				'amount' => $this->input->post('amount_value')[$x],
 				'Staff' => $_SESSION['username'],
 				'date_time' => $timestamp,
+				'date_only' => $dateOnly,
 				'product_name' => $product_name['name']
 
 
@@ -365,6 +379,8 @@ class Model_orders extends CI_Model
 			date_default_timezone_set('Asia/Manila');
 			$currentDate2 = date('Y/m/d h:i:s'); // Get the current date in the format: Year-Month-Day
 			$timestamp2 = strtotime($currentDate2);
+			$currentDateOnly2 = date('Y/m/d'); // Get the current date in the format: Year-Month-Day
+		$dateOnly2 = strtotime($currentDateOnly2);
 
 			// now decrease the product qty
 			$count_product = count($this->input->post('product'));
@@ -380,6 +396,7 @@ class Model_orders extends CI_Model
 					'amount' => $this->input->post('amount_value')[$x],
 					'Staff' => $_SESSION['username'],
 					'date_time' => $timestamp2,
+					'date_only' => $dateOnly2,
 					'product_name' => $product_name['name']
 
 
