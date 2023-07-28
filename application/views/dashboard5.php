@@ -175,38 +175,9 @@
 </div>
 <!-- /.content-wrapper -->
 <script>
-  function handleButtonClick(prodName) {
-    
-    // var message = document.getElementById('message').value;
-
-    // Create a new XMLHttpRequest object
-    var xhr = new XMLHttpRequest();
-
-    // Configure the AJAX request
-    xhr.open('POST', 'sendToCOM9.php', true);
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-
-    // Define the callback function when the AJAX request completes
-    xhr.onreadystatechange = function () {
-      console.log("outer - 1");
-      if (xhr.readyState === XMLHttpRequest.DONE) {
-        if (xhr.status === 200) {
-          // Parse the JSON response
-          var response = JSON.parse(xhr.responseText);
-          console.log("HERE - 1");
-          // Update the result div with the response message
-          alert("Button clicked: " + prodName + ":" + response.message);
-          // document.getElementById('result').innerHTML = response.message;
-        } else {
-          console.log("HERE - 2");
-          alert("Button clicked: " + prodName + ":" + xhr.statusText);
-          // document.getElementById('result').innerHTML = 'Error: ' + xhr.statusText;
-        }
-      }
-    };
-
-    // Send the AJAX request with the message as the POST data
-    xhr.send('message=' + encodeURIComponent("a"));
+  async function handleButtonClick(prodName) {
+    alert("Button clicked: " + prodName);
+   
     
   }
 
