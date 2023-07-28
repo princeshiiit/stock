@@ -233,15 +233,24 @@ class Model_orders extends CI_Model
 			'user_id' => $user_id
 		);
 
-		$express = array(
-			'express_amount' => $this->input->post('Express'),
-			'date_time' => $timestamp,
-		);
+		
 
 		mysqli_close($link);
 		$insert = $this->db->insert('orders', $data);
-		$this->db->insert('express_items', $express);
+		
+		
 		$order_id = $this->db->insert_id();
+		// $express = array(
+		// 	'id' => $order_id,
+		// 	'express_amount' => $this->input->post('Express'),
+		// 	'date_time' => $timestamp,
+		// );
+
+		// if ($this->input->post('Express') == 0 || $this->input->post('Express') == "0") {
+
+		// } else {
+		// 	$this->db->insert('express_items', $express);
+		// }
 
 		$this->load->model('model_products');
 
@@ -268,14 +277,14 @@ class Model_orders extends CI_Model
 
 			);
 
-			$reports = array(
-				'product_name' => $product_name['name'],
-				'qty' => $this->input->post('qty')[$x],
-				'date_time' => $timestamp,
-			);
+			// $reports = array(
+			// 	'product_name' => $product_name['name'],
+			// 	'qty' => $this->input->post('qty')[$x],
+			// 	'date_time' => $timestamp,
+			// );
 
 
-			$this->db->insert('daily_reports', $reports);
+			// $this->db->insert('daily_reports', $reports);
 
 			$test = $this->input->post('product')[$x];
 			$newval = $this->input->post('qty')[$x];
