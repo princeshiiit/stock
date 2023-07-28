@@ -129,14 +129,14 @@
               ?>
 
               <div class="form-group">
-                <label for="gross_amount" class="col-sm-12 control-label">Date:
+                <label for="Date" class="col-sm-12 control-label">Date:
                   <?php
                   date_default_timezone_set("Asia/Manila");
                   echo date('Y-m-d') ?>
                 </label>
               </div>
               <div class="form-group">
-                <label for="gross_amount" class="col-sm-12 control-label">Time:
+                <label for="Time" class="col-sm-12 control-label">Time:
                   <?php
                   date_default_timezone_set("Asia/Manila");
                   echo date('h:i a') ?>
@@ -282,7 +282,7 @@
                   <label for="Express" class="col-sm-5 control-label">Express</label>
                   <div class="col-sm-7">
                     <input type="text" class="form-control" id="Express" name="Express" placeholder="0"
-                      oninput="subAmount(event)" onkeyup="subAmount(event)" required autocomplete="off">
+                      oninput="subAmount(event)" value= "0" required autocomplete="off">
                   </div>
                 </div>
                 <div class="form-group">
@@ -423,6 +423,7 @@
 
       $("#amount_" + row_id).val("");
       $("#amount_value_" + row_id).val("");
+      subAmount();
 
     } else {
       $.ajax({
@@ -492,9 +493,10 @@
     // $("#totalAmountValue").val(totalAmount.toFixed(2));
 
     var Express = $("#Express").val();
-    var input = event.target;
-    var value = input.value;
-    if (value === null) {
+    console.log("EXPRESS VALUE :"+ Express);
+    // var input = event.target;
+    // var value = input.value;
+    if (Express === 0) {
       // alert("1st else");
       $("#net_amount").val(totalAmount.toFixed(2));
       $("#net_amount_value").val(totalAmount.toFixed(2));

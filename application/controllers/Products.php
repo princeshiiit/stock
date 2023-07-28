@@ -110,6 +110,7 @@ class Products extends Admin_Controller
         	$upload_image = $this->upload_image();
 
         	$data = array(
+                'id' => strtoupper(substr(md5(uniqid(mt_rand(), true)), 0, 4)),
         		'name' => $this->input->post('product_name'),
         		'sku' => $this->input->post('sku'),
         		'price' => $this->input->post('price'),
@@ -215,6 +216,7 @@ class Products extends Admin_Controller
             // true case
             
             $data = array(
+                'id' => strtoupper(substr(md5(uniqid(mt_rand(), true)), 0, 4)),
                 'name' => $this->input->post('product_name'),
                 'sku' => $this->input->post('sku'),
                 'price' => $this->input->post('price'),

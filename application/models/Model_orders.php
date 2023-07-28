@@ -111,6 +111,39 @@ class Model_orders extends CI_Model
 		$query = $this->db->query($sql);
 		return $query->result_array();
 	}
+	//SELECT product_name, SUM(qty) AS total_qty FROM orders_item GROUP BY product_name ORDER BY product_name ASC;
+
+	public function getPerItemOrderCount($id = null)
+	{
+		// if ($id) {
+		// 	$sql = "SELECT product_name, amount, date_only, SUM(qty) AS total_qty, SUM(qty * amount) AS total_val FROM orders_item WHERE id = ? GROUP BY product_name, amount, date_only ORDER BY product_name ASC";
+		// 	$query = $this->db->query($sql, array($id));
+		// 	return $query->row_array();
+		// }
+		// $sql = "SELECT * FROM orders_item";
+		// $sql = "SELECT product_name, amount, date_only, SUM(qty) AS total_qty, SUM(qty * amount) AS total_val FROM orders_item GROUP BY product_name, date_only ORDER BY product_name ASC;";
+		$sql = "WITH Summary AS (
+			SELECT
+			  product_name,
+			  DATE(FROM_UNIXTIME(date_time)) AS date,
+			  rate,
+			  SUM(qty) AS total_count,
+			  rate AS rate_value
+			FROM orders_item
+			GROUP BY product_name, DATE(FROM_UNIXTIME(date_time)), rate
+		  )
+		  SELECT
+			product_name,
+			DATE(date) AS date_time,
+			rate,
+			SUM(total_count) AS total_count,
+			SUM(total_count * rate_value) AS total_amount
+		  FROM Summary
+		  GROUP BY product_name, DATE(date), rate;
+		  ";
+		$query = $this->db->query($sql);
+		return $query->result_array();
+	}
 
 	public function getVoidedHistory($id = null)
 	{
@@ -176,6 +209,9 @@ class Model_orders extends CI_Model
 		$currentDate = date('Y/m/d h:i:s'); // Get the current date in the format: Year-Month-Day
 		$timestamp = strtotime($currentDate);
 
+		$currentDateOnly = date('Y/m/d'); // Get the current date in the format: Year-Month-Day
+		$dateOnly = strtotime($currentDateOnly);
+
 		// $today = strtotime($todays_date,"-14 hours");
 		$bill_no = 'TRANSNO-' . strtoupper(substr(md5(uniqid(mt_rand(), true)), 0, 4));
 		$data = array(
@@ -196,9 +232,25 @@ class Model_orders extends CI_Model
 			'paid_status' => 1,
 			'user_id' => $user_id
 		);
+
+		
+
 		mysqli_close($link);
 		$insert = $this->db->insert('orders', $data);
+		
+		
 		$order_id = $this->db->insert_id();
+		// $express = array(
+		// 	'id' => $order_id,
+		// 	'express_amount' => $this->input->post('Express'),
+		// 	'date_time' => $timestamp,
+		// );
+
+		// if ($this->input->post('Express') == 0 || $this->input->post('Express') == "0") {
+
+		// } else {
+		// 	$this->db->insert('express_items', $express);
+		// }
 
 		$this->load->model('model_products');
 
@@ -215,6 +267,7 @@ class Model_orders extends CI_Model
 				'amount' => $this->input->post('amount_value')[$x],
 				'Staff' => $_SESSION['username'],
 				'date_time' => $timestamp,
+				'date_only' => $dateOnly,
 				'product_name' => $product_name['name']
 
 
@@ -224,14 +277,14 @@ class Model_orders extends CI_Model
 
 			);
 
-			$reports = array(
-				'product_name' => $product_name['name'],
-				'qty' => $this->input->post('qty')[$x],
-				'date_time' => $timestamp,
-			);
+			// $reports = array(
+			// 	'product_name' => $product_name['name'],
+			// 	'qty' => $this->input->post('qty')[$x],
+			// 	'date_time' => $timestamp,
+			// );
 
 
-			$this->db->insert('daily_reports', $reports);
+			// $this->db->insert('daily_reports', $reports);
 
 			$test = $this->input->post('product')[$x];
 			$newval = $this->input->post('qty')[$x];
@@ -280,8 +333,8 @@ class Model_orders extends CI_Model
 	public function countOrderItem($order_id)
 	{
 		if ($order_id) {
-			$sql = "SELECT * FROM orders_item WHERE order_id = ?";
-			$query = $this->db->query($sql, array($order_id));
+			$sql = "SELECT * FROM orders_item WHERE order_id = $order_id";
+			$query = $this->db->query($sql);
 			return $query->num_rows();
 		}
 
@@ -335,6 +388,8 @@ class Model_orders extends CI_Model
 			date_default_timezone_set('Asia/Manila');
 			$currentDate2 = date('Y/m/d h:i:s'); // Get the current date in the format: Year-Month-Day
 			$timestamp2 = strtotime($currentDate2);
+			$currentDateOnly2 = date('Y/m/d'); // Get the current date in the format: Year-Month-Day
+		$dateOnly2 = strtotime($currentDateOnly2);
 
 			// now decrease the product qty
 			$count_product = count($this->input->post('product'));
@@ -350,6 +405,7 @@ class Model_orders extends CI_Model
 					'amount' => $this->input->post('amount_value')[$x],
 					'Staff' => $_SESSION['username'],
 					'date_time' => $timestamp2,
+					'date_only' => $dateOnly2,
 					'product_name' => $product_name['name']
 
 

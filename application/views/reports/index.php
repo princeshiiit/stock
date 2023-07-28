@@ -112,13 +112,15 @@
 
 
     </div>
-    <section class="content">
-      <button class="btn btn-success btn-print" onclick="tableToExcel('manageTable', 'All_Orders_Item')"><i
-          class="glyphicon glyphicon-arrow-down"></i>Export Table</button>
-      <h4>
+    
+    <h4>
         All orders
       </h4>
-      <div class="box-body">
+      
+      
+    <div class="box-body">
+      <button class="btn btn-success btn-print" onclick="tableToExcel('manageTable', 'All_Orders_Item')"><i
+          class="glyphicon glyphicon-arrow-down"></i>Export Table</button>
 
         <table width="100%" id="allOrdersTable" class="table table-bordered table-striped">
 
@@ -162,112 +164,55 @@
       </div>
       <?php if ($user_permission): ?>
         <?php if (in_array('deleteOrder', $user_permission)): ?>
+          <h4>Product Sold Count
+    </h4>
           <div class="box-body">
-            <button class="btn btn-success btn-print"
-              onclick="tableToExcel('manageTable3', 'Product Report - <?php echo date('Y/m/d'); ?>')"><i
-                class="glyphicon glyphicon-arrow-down"></i>Export Product Reports</button>
-            <table width="100%" id="manageTable3" class="table table-bordered table-striped">
+          
+    <div class="box-body">
+      <button class="btn btn-success btn-print"
+        onclick="tableToExcel('perItemTable', '<?php echo date('Y/m/d'); ?>')"><i
+          class="glyphicon glyphicon-arrow-down"></i>Export Current Report</button>
+
+      <table width="100%" id="perItemTable" class="table table-bordered table-striped">
 
 
-              <thead>
-                <tr>
+        <thead>
+          <tr>
 
-                  <th>Product Name</th>
-                  <th>Sold Count</th>
-                  <th>Rate</th>
-                  <th>Amount</th>
-
-
-
-                </tr>
-
-
-              </thead>
-              <tbody>
-
-                <?php
-                $link = mysqli_connect("localhost", "root", "", "stock");
-                // $selectedname=$this->input->post('custdetails');
-                $sql = "SELECT * FROM products";
-
-                $result = mysqli_query($link, $sql);
-                if ($result != 0) {
-
-                  $num_results = mysqli_num_rows($result);
-                  for ($i = 0; $i < $num_results; $i++) {
-                    $row = mysqli_fetch_array($result);
-                    $name = $row['name'];
-                    $rate = $row['price'];
-                    $sql2 = "SELECT * FROM orders_item WHERE product_name = $name";
-                    $currentDate2 = date('Y/m/d'); // Get the current date in the format: Year-Month-Day
-                    $timestamp2 = strtotime($currentDate2);
-                    $totalQuery = "SELECT product_name, SUM(qty) AS count FROM orders_item WHERE `product_name` = '$name' AND DATE(FROM_UNIXTIME(date_time)) = CURRENT_DATE";
-                    // $result = $link->query($totalQuery);
-                    // $row = $result->fetch_assoc()
-                    $result2 = mysqli_query($link, $totalQuery);
-                    $row2 = mysqli_fetch_array($result2);
-                    $value = $row2['count'];
-                    if ($value == '') {
-                      $value = 0;
-                    }
-
-                    $amount = $value * $rate;
-                    $totalAmount = $totalAmount + $amount;
-
-
-
-
-
-                    // $qty = $row['qty'];
-                    echo '<tr><td> ' . $name . ' </td><td>' . $value . '</td><td>₱' . $rate . '</td><td>₱' . $amount . '</td></tr>';
-                    // $value = $value - $value;
-                    // echo '.$row['total_amount'].';
+            <th>Product Name</th>
+            <th>Price</th>
+            <th>QTY</th>
+            <th>Total Amount</th>
+            <th>Date</th>
+            <!-- <th></th> -->
             
 
-                  }
 
-                  echo '          </tbody><tfoot>
-                  <tr>
-                    <th></th>
-                              <th>Total Amount:</th>
-                              <th></th>
-                              <th id="totalAmount1">₱ ' . $totalAmount . '</th>
-                              <th></th>
-                              <th></th>
-                              
-                   
-                  </tr>
-                </tfoot>';
+          </tr>
+
+        </thead>
+        <tbody>
 
 
-                }
+        </tbody>
+
+        <!-- <tfoot>
+          <tr>
+            <th></th>
+            <th>Total Amount:</th>
+            <th></th>
+            <th id="totalAmount">0</th>
+            <th></th>
+            <th></th>
 
 
-                ?>
+          </tr>
+        </tfoot> -->
 
-                <!-- <th>Product Name</th>
-<th>Sold Count for today</th> -->
-
-
+      </table>
 
 
-
-                <!-- </tbody> -->
-
-                <!-- <tfoot>
-    <tr>
-      <th></th>
-                <th>Total Amount:</th>
-                <th></th>
-                <th id="totalAmount1"><?php $rate ?></th>
-                <th></th>
-                <th></th>
-                
-     
-    </tr>
-  </tfoot> -->
-
-            </table>
+    </div>
 
 
           </div>
@@ -306,6 +251,34 @@
   });
 
   manageTable1.on('draw.dt', function () {
+    updateTotalAmount();
+  });
+
+  // Initially, update the total amount
+  console.log('Document ready');
+  updateTotalAmount();
+});
+
+var perItemTable;
+  var base_url = "<?php echo base_url(); ?>";
+//current
+  $(document).ready(function () {
+  $("#mainOrdersNav").addClass('active');
+  $("#manageOrdersNav").addClass('active');
+
+  // Initialize the datatable
+  perItemTable = $('#perItemTable').DataTable({
+    'ajax': base_url + 'orders/fetchOrdersDataPerItem',
+    'order': [],
+    'initComplete': function (settings, json) {
+      // Calculate and update the total amount
+      // console.log(json);
+      updateTotalAmount();
+    }
+  });
+
+  perItemTable.on('draw.dt', function () {
+    console.log("PERITEMTABLE>>>");
     updateTotalAmount();
   });
 
