@@ -188,6 +188,25 @@ class Orders extends Admin_Controller
 		echo json_encode($result);
 	}
 
+	public function fetchOrdersDataExpress()
+	{
+		$result = array('data' => array());
+
+		$data = $this->model_orders->getExpressTransaction();
+
+		foreach ($data as $key => $value) {
+			$date = date('Y/m/d h:i a', $value['date_time']);
+
+			$result['data'][$key] = array(
+				$value['id'],
+				$date,
+				$value['express']
+			);
+		} // /foreach
+
+		echo json_encode($result);
+	}
+
 	public function fetchOrdersDataPerItem()
 	{
 		$result = array('data' => array());
@@ -210,7 +229,7 @@ class Orders extends Admin_Controller
 				$value['date_time'],
 			);
 		} // /foreach
-		
+
 		echo json_encode($result);
 	}
 
@@ -390,7 +409,6 @@ class Orders extends Admin_Controller
 			if ($order_id) {
 				// $this->session->set_flashdata('success', 'Successfully created',1);
 				redirect('orders/update/' . $order_id, 'refresh');
-
 			} else {
 				$this->session->set_flashdata('errors', 'Error occurred!!');
 				redirect('orders/create/', 'refresh');
@@ -645,7 +663,7 @@ class Orders extends Admin_Controller
 														<p>
 															' . $count_items . '<br>
 															' . $order_data['Express'] . '<br>
-															' . $order_data['net_amount'] .'<br>
+															' . $order_data['net_amount'] . '<br>
 															' . $paid_status . '<br>
 														</p>
 														
@@ -957,5 +975,4 @@ class Orders extends Admin_Controller
 			echo $html;
 		}
 	}
-
 }

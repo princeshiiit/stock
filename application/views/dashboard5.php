@@ -72,6 +72,93 @@
 
           </table>
 
+          <!-- MACHINE -->
+          <?php
+          // Replace these with your actual database credentials
+          $servername = "localhost";
+          $username = "root";
+          $password = "";
+          $dbname = "stock";
+          ?>
+          <?php
+          // Check if $_SESSION['username'] is equal to "prince"
+          if ($_SESSION['username'] === 'prince') {
+            ?>
+            <table>
+              <tr>
+                <td>
+                  <table>
+                    <tr>
+
+                      <?php
+                      // Replace these with your actual database credentials
+                      // $servername = "your_servername";
+                      // $username = "your_username";
+                      // $password = "your_password";
+                      // $dbname = "your_dbname";
+                    
+                      // Create a connection
+                      $conn = new mysqli($servername, $username, $password, $dbname);
+
+                      // Check connection
+                      if ($conn->connect_error) {
+                        die("Connection failed: " . $conn->connect_error);
+                      }
+
+                      // Query to retrieve prod_name values with "DRY" from the machine table
+                      $sql_dry = "SELECT prod_name FROM machine WHERE prod_name LIKE '%DRY%'";
+                      $result_dry = $conn->query($sql_dry);
+
+                      if ($result_dry->num_rows > 0) {
+                        // Loop through each row and create a button for each prod_name with "DRY"
+                        while ($row_dry = $result_dry->fetch_assoc()) {
+                          $prod_name_dry = $row_dry["prod_name"];
+                          echo "<td><button onclick='handleButtonClick(\"$prod_name_dry\")' class='btn btn-danger btn-md' type='button'>$prod_name_dry</button></td>";
+                        }
+                      } else {
+                        echo "<td>No data available.</td>";
+                      }
+
+                      // Close the database connection
+                      // $conn->close();
+                      ?>
+                    </tr>
+                  </table><br>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <table>
+                    <tr>
+
+                      <?php
+                      // Create a connection (you can reuse the same $servername, $username, $password, and $dbname variables)
+                    
+                      // Query to retrieve prod_name values with "WASH" from the machine table
+                      $sql_wash = "SELECT prod_name FROM machine WHERE prod_name LIKE '%WASH%'";
+                      $result_wash = $conn->query($sql_wash);
+
+                      if ($result_wash->num_rows > 0) {
+                        // Loop through each row and create a button for each prod_name with "WASH"
+                        while ($row_wash = $result_wash->fetch_assoc()) {
+                          $prod_name_wash = $row_wash["prod_name"];
+                          echo "<td><button onclick='handleButtonClick(\"$prod_name_wash\")' class='btn btn-primary btn-sm' type='button'>$prod_name_wash</button></td>";
+                        }
+                      } else {
+                        echo "<td>No data available.</td>";
+                      }
+
+                      // Close the database connection
+                      $conn->close();
+                      ?>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+
+          <?php } ?> <!-- CLOSE -->
+
 
         </div>
         <!-- /.box-body -->
@@ -87,7 +174,14 @@
 <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
+<script>
+  async function handleButtonClick(prodName) {
+    alert("Button clicked: " + prodName);
+   
+    
+  }
 
+</script>
 <script type="text/javascript">
   var manageTable;
   var base_url = "<?php echo base_url(); ?>";

@@ -58,8 +58,8 @@ class Model_orders extends CI_Model
 		$currentTime = strtotime($end);
 
 		// 		$dateString = "2023-07-16 12:34:56";
-// $timestamp = strtotime($dateString);
-// $reversedDateString = date("Y-m-d H:i:s", $timestamp);
+		// $timestamp = strtotime($dateString);
+		// $reversedDateString = date("Y-m-d H:i:s", $timestamp);
 
 		$sql = "SELECT * FROM orders_item WHERE date_time BETWEEN '" . $unixTimeStart . "' AND '" . $currentTime . "' AND Staff = '" . $currentUser . "' ORDER BY order_id ASC";
 		// $sql = "SELECT * FROM orders_item WHERE Staff ='".$currentUser."' AND DATE(FROM_UNIXTIME(date_time)) = CURRENT_DATE ORDER BY order_id ASC";
@@ -81,8 +81,8 @@ class Model_orders extends CI_Model
 		$currentTime = strtotime($end);
 
 		// 		$dateString = "2023-07-16 12:34:56";
-// $timestamp = strtotime($dateString);
-// $reversedDateString = date("Y-m-d H:i:s", $timestamp);
+		// $timestamp = strtotime($dateString);
+		// $reversedDateString = date("Y-m-d H:i:s", $timestamp);
 
 		// $sql = "SELECT * FROM orders_item WHERE date_time BETWEEN '".$unixTimeStart."' AND '".$currentTime."' AND Staff = '".$currentUser."' ORDER BY order_id ASC";
 		$sql = "SELECT * FROM orders_item WHERE Staff ='" . $currentUser . "' AND DATE(FROM_UNIXTIME(date_time)) = CURRENT_DATE - 1 ORDER BY order_id ASC";
@@ -104,8 +104,8 @@ class Model_orders extends CI_Model
 		$currentTime = strtotime($end);
 
 		// 		$dateString = "2023-07-16 12:34:56";
-// $timestamp = strtotime($dateString);
-// $reversedDateString = date("Y-m-d H:i:s", $timestamp);
+		// $timestamp = strtotime($dateString);
+		// $reversedDateString = date("Y-m-d H:i:s", $timestamp);
 
 		$sql = "SELECT * FROM orders_item ORDER BY id DESC";
 		$query = $this->db->query($sql);
@@ -141,6 +141,13 @@ class Model_orders extends CI_Model
 		  FROM Summary
 		  GROUP BY product_name, DATE(date), rate;
 		  ";
+		$query = $this->db->query($sql);
+		return $query->result_array();
+	}
+
+	public function getExpressTransaction($id = null)
+	{
+		$sql = "SELECT id, date_time, express FROM orders WHERE express IS NOT NULL AND express <> 0";
 		$query = $this->db->query($sql);
 		return $query->result_array();
 	}
@@ -198,10 +205,7 @@ class Model_orders extends CI_Model
 				$fullname = $row['fullname'];
 				$address = $row['address'];
 				$phone = $row['phone'];
-
 			}
-
-
 		}
 
 
@@ -233,12 +237,12 @@ class Model_orders extends CI_Model
 			'user_id' => $user_id
 		);
 
-		
+
 
 		mysqli_close($link);
 		$insert = $this->db->insert('orders', $data);
-		
-		
+
+
 		$order_id = $this->db->insert_id();
 		// $express = array(
 		// 	'id' => $order_id,
@@ -294,10 +298,6 @@ class Model_orders extends CI_Model
 
 			$sql3 = "UPDATE machine SET `prod_qty`=prod_qty+$newval WHERE prod_id='$test'";
 			if ($this->db->query($sql3) === TRUE) {
-
-
-
-
 			}
 
 
@@ -328,7 +328,7 @@ class Model_orders extends CI_Model
 
 		return ($order_id) ? $order_id : false;
 	}
-	
+
 
 	public function countOrderItem($order_id)
 	{
@@ -337,7 +337,6 @@ class Model_orders extends CI_Model
 			$query = $this->db->query($sql);
 			return $query->num_rows();
 		}
-
 	}
 
 	public function update($id)
@@ -389,7 +388,7 @@ class Model_orders extends CI_Model
 			$currentDate2 = date('Y/m/d h:i:s'); // Get the current date in the format: Year-Month-Day
 			$timestamp2 = strtotime($currentDate2);
 			$currentDateOnly2 = date('Y/m/d'); // Get the current date in the format: Year-Month-Day
-		$dateOnly2 = strtotime($currentDateOnly2);
+			$dateOnly2 = strtotime($currentDateOnly2);
 
 			// now decrease the product qty
 			$count_product = count($this->input->post('product'));
@@ -465,5 +464,4 @@ class Model_orders extends CI_Model
 		$query = $this->db->query($sql, array(1));
 		return $query->num_rows();
 	}
-
 }
