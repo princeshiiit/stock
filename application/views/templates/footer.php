@@ -1,6 +1,6 @@
 <footer class="main-footer">
   <div class="pull-right hidden-xs">
-    <b>Version</b> 0.1.0
+    <b>Version</b> 2.0.0
   </div>
   <strong>Copyright &copy; PJPT Software Solutions 2018-
     <?php echo date('Y') ?>.
