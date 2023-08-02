@@ -195,7 +195,7 @@ class Orders extends Admin_Controller
 		$data = $this->model_orders->getExpressTransaction();
 
 		foreach ($data as $key => $value) {
-			$date = date('Y/m/d h:i a', $value['date_time']);
+			$date = date('Y-m-d', $value['date_time']);
 
 			$result['data'][$key] = array(
 				$value['id'],
