@@ -85,7 +85,7 @@ class Model_orders extends CI_Model
 		// $reversedDateString = date("Y-m-d H:i:s", $timestamp);
 
 		// $sql = "SELECT * FROM orders_item WHERE date_time BETWEEN '".$unixTimeStart."' AND '".$currentTime."' AND Staff = '".$currentUser."' ORDER BY order_id ASC";
-		$sql = "SELECT * FROM orders_item WHERE Staff ='" . $currentUser . "' AND DATE(FROM_UNIXTIME(date_time)) = CURRENT_DATE - 1 ORDER BY order_id ASC";
+		$sql = "SELECT * FROM orders_item WHERE DATE(FROM_UNIXTIME(date_time)) = CURRENT_DATE - 1 ORDER BY order_id ASC";
 		$query = $this->db->query($sql);
 		return $query->result_array();
 	}
