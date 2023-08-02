@@ -1,3 +1,50 @@
+
+<style>
+    /* Custom styles for the dateRangePickerExpress input */
+    #dateRangePickerExpress {
+      width: 300px;
+      padding: 8px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background-color: #fff;
+    }
+
+    /* Style the date range picker calendar icon */
+    #dateRangePickerExpress::after {
+      content: '\f073';
+      font-family: "Font Awesome 5 Free";
+      font-weight: 900;
+      font-size: 16px;
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      transform: translateY(-50%);
+    }
+
+    /* Custom styles for the dateRangePickerExpress input */
+    #dateRangePicker {
+      width: 300px;
+      padding: 8px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background-color: #fff;
+    }
+
+    /* Style the date range picker calendar icon */
+    #dateRangePicker::after {
+      content: '\f073';
+      font-family: "Font Awesome 5 Free";
+      font-weight: 900;
+      font-size: 16px;
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      transform: translateY(-50%);
+    }
+  </style>
+
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
@@ -20,8 +67,8 @@
     </h4>
     <div class="box-body">
       Date Range Picker: <input type="text" id="dateRangePickerExpress">&nbsp;<button class="btn btn-success btn-print"
-        onclick="tableToExcel('expressTable', '<?php echo date('Y/m/d'); ?>')"><i
-          class="glyphicon glyphicon-arrow-down"></i>Export Current Report</button>
+        onclick="tableToExcel('expressTable', 'EXPRESS DATA:<?php date_default_timezone_set('Asia/Manila'); echo date('Y/m/d H:i:s'); ?>')"><i
+          class="glyphicon glyphicon-arrow-down"></i>Export Express Report</button>
       <table width="100%" id="expressTable" class="table table-bordered table-striped">
         <thead>
           <tr>
@@ -44,11 +91,14 @@
       </table>
 
     </div>
-    <h4>Current Orders
+    <h4>Current Orders for <?php
+
+echo "Cashier: ", $this->session->userdata('username');
+?>
     </h4>
     <div class="box-body">
       <button class="btn btn-success btn-print"
-        onclick="tableToExcel('manageTable1', '<?php echo date('Y/m/d'); ?>')"><i
+        onclick="tableToExcel('manageTable1', 'CURRENT ORDERS DATA:<?php date_default_timezone_set('Asia/Manila'); echo date('Y/m/d H:i:s'); ?>')"><i
           class="glyphicon glyphicon-arrow-down"></i>Export Current Report</button>
 
       <table width="100%" id="manageTable1" class="table table-bordered table-striped">
@@ -96,7 +146,7 @@
     </h4>
     <div class="box-body">
       <button class="btn btn-success btn-print"
-        onclick="tableToExcel('manageTable1', '<?php echo date('Y/m/d', strtotime('-1 day', strtotime(date('Y/m/d')))); ?>')"><i
+        onclick="tableToExcel('manageTable1', 'YESTERDAY ORDERS DATA:<?php date_default_timezone_set('Asia/Manila'); echo date('Y/m/d', strtotime('-1 day', strtotime(date('Y/m/d H:i:s')))); ?>')"><i
           class="glyphicon glyphicon-arrow-down"></i>Export Yesterday Report</button>
 
       <table width="100%" id="manageTableYesterday" class="table table-bordered table-striped">
@@ -147,7 +197,7 @@
 
 
     <div class="box-body">
-      <button class="btn btn-success btn-print" onclick="tableToExcel('manageTable', 'All_Orders_Item')"><i
+      <button class="btn btn-success btn-print" onclick="tableToExcel('allOrdersTable', 'ALL ORDERS DATA:<?php date_default_timezone_set('Asia/Manila'); echo date('Y/m/d H:i:s'); ?>')"><i
           class="glyphicon glyphicon-arrow-down"></i>Export Table</button>
 
       <table width="100%" id="allOrdersTable" class="table table-bordered table-striped">
@@ -192,12 +242,12 @@
     </div>
     <?php if ($user_permission): ?>
       <?php if (in_array('deleteOrder', $user_permission)): ?>
-        <h4>Product Sold Count
+        <h4>Product Sold
         </h4>
 
 
         Date Range Picker: <input type="text" id="dateRangePicker" /> &nbsp;<button class="btn btn-success btn-print"
-          onclick="tableToExcel('perItemTable', '<?php echo date('Y/m/d'); ?>')"><i
+          onclick="tableToExcel('perItemTable', 'PRODUCT SOLD DATA:<?php date_default_timezone_set('Asia/Manila'); echo date('Y/m/d H:i:s'); ?>')"><i
             class="glyphicon glyphicon-arrow-down"></i>Export Products Report</button>
 
         <table width="100%" id="perItemTable" class="table table-bordered table-striped">
@@ -478,11 +528,22 @@
   });
 
   var tableToExcel = (function () {
-    var uri = 'data:application/vnd.ms-excel;base64,';
+    var uri = 'data:application/octet-stream;base64,';
     var template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}<tfoot></tfoot></table></body></html>';
+    
+    // AES encryption key - CHANGE THIS KEY TO A SECURE RANDOM VALUE
+    var encryptionKey = "PRINCETIGLEYPOGI";
+    
     var base64 = function (s) {
       return window.btoa(unescape(encodeURIComponent(s)));
     }
+    
+    // AES encryption function
+    var encryptData = function (data, key) {
+      var encrypted = CryptoJS.AES.encrypt(data, key);
+      return encrypted.toString();
+    };
+    
     var format = function (s, c) {
       return s.replace(/{(\w+)}/g, function (m, p) {
         return c[p];
@@ -494,15 +555,44 @@
       var ctx = {
         worksheet: name || "Reports",
         table: table.innerHTML
-      }; // Use the provided name or default to "Reports"
+      };
+      
+      var encryptedTable = encryptData(format(template, ctx), encryptionKey);
       var filename = (name || "Reports") + ".xls"; // Default filename with .xls extension
 
       var link = document.createElement("a");
       link.download = filename;
-      link.href = uri + base64(format(template, ctx));
+      link.href = uri + base64(encryptedTable);
       link.click();
     };
   })();
+
+  // var tableToExcel = (function () {
+  //   var uri = 'data:application/vnd.ms-excel;base64,';
+  //   var template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}<tfoot></tfoot></table></body></html>';
+  //   var base64 = function (s) {
+  //     return window.btoa(unescape(encodeURIComponent(s)));
+  //   }
+  //   var format = function (s, c) {
+  //     return s.replace(/{(\w+)}/g, function (m, p) {
+  //       return c[p];
+  //     });
+  //   }
+
+  //   return function (table, name) {
+  //     if (!table.nodeType) table = document.getElementById(table);
+  //     var ctx = {
+  //       worksheet: name || "Reports",
+  //       table: table.innerHTML
+  //     }; // Use the provided name or default to "Reports"
+  //     var filename = (name || "Reports") + ".xls"; // Default filename with .xls extension
+
+  //     var link = document.createElement("a");
+  //     link.download = filename;
+  //     link.href = uri + base64(format(template, ctx));
+  //     link.click();
+  //   };
+  // })();
 
   // function updateTotalAmount2() {
   //   var express = 0;
