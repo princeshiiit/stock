@@ -66,7 +66,7 @@ var tableToExcel = (function() {
               <tr>
                
                
-                <th>SKU</th>
+                <th>Product Code</th>
                 <th>Product Name</th>
                 <th>Price</th>
 

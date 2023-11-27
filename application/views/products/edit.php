@@ -65,8 +65,8 @@
                 </div>
 
                 <div class="form-group">
-                  <label for="sku">SKU</label>
-                  <input required type="text" class="form-control" id="sku" name="sku" placeholder="Enter sku" value="<?php echo $product_data['sku']; ?>" autocomplete="off" />
+                  <label for="sku">Product Code</label>
+                  <input required type="text" class="form-control" id="sku" name="sku" placeholder="Enter Product code" value="<?php echo $product_data['sku']; ?>" autocomplete="off" />
                 </div>
 
                 <div class="form-group">
@@ -76,7 +76,7 @@
 
                 <div class="form-group">
                   <label for="qty">Qty</label>
-                  <input required type="number" class="form-control" id="qty" name="qty" placeholder="Enter Qty" value="<?php echo $product_data['qty']; ?>" autocomplete="off" min="1" max="1000"/>
+                  <input required type="number" class="form-control" id="qty" name="qty" placeholder="Enter Qty" value="<?php echo $product_data['qty']; ?>" autocomplete="off" min="1" max="1000000"/>
                 </div>
 
                 <div class="form-group">
@@ -88,7 +88,7 @@
                 </div>
 
                 <?php $attribute_id = json_decode($product_data['attribute_value_id']); ?>
-                <?php if($attributes): ?>
+                <!-- <?php if($attributes): ?>
                   <?php foreach ($attributes as $k => $v): ?>
                     <div class="form-group">
                       <label for="groups"><?php echo $v['attribute_data']['name'] ?></label>
@@ -119,7 +119,7 @@
                       <option value="<?php echo $v['id'] ?>" <?php if(in_array($v['id'], $category_data)) { echo 'selected="selected"'; } ?>><?php echo $v['name'] ?></option>
                     <?php endforeach ?>
                   </select>
-                </div>
+                </div> -->
 
                 <div class="form-group">
                   <label for="store">Store</label>
