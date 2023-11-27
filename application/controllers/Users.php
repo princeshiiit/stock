@@ -148,7 +148,7 @@ class Users extends Admin_Controller
 
 			        	$update = $this->model_users->edit($data, $id, $this->input->post('groups'));
 			        	if($update == true) {
-			        		$this->session->set_flashdata('success', 'Successfully updated');
+			        		// $this->session->set_flashdata('success', 'Successfully updated');
 			        		redirect('users/', 'refresh');
 			        	}
 			        	else {
@@ -275,7 +275,7 @@ class Users extends Admin_Controller
 
 		        	$update = $this->model_users->edit($data, $id);
 		        	if($update == true) {
-		        		$this->session->set_flashdata('success', 'Successfully updated');
+		        		// $this->session->set_flashdata('success', 'Successfully updated');
 		        		redirect('users/setting/', 'refresh');
 		        	}
 		        	else {
@@ -303,7 +303,7 @@ class Users extends Admin_Controller
 
 			        	$update = $this->model_users->edit($data, $id, $this->input->post('groups'));
 			        	if($update == true) {
-			        		$this->session->set_flashdata('success', 'Successfully updated');
+			        		// $this->session->set_flashdata('success', 'Successfully updated');
 			        		redirect('users/setting/', 'refresh');
 			        	}
 			        	else {
