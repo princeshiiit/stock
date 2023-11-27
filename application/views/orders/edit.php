@@ -39,6 +39,20 @@
           <div class="box-header">
             <h3 class="box-title">Edit Order</h3>
           </div>
+
+          <?php
+// Get the current URL
+$currentUrl = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+
+// Extract the part after the last slash
+$lastPart = substr($currentUrl, strrpos($currentUrl, '/') + 1);
+?>
+
+<div class="box-header">
+    <h3 class="box-title">Transaction No. :</h3>
+    <h3 class="box-title"><?php echo $lastPart; ?></h3>
+</div>
+
           <!-- /.box-header -->
           <form role="form" action="<?php base_url('orders/create') ?>" method="post" class="form-horizontal">
             <div class="box-body">
@@ -131,8 +145,8 @@
                             <?php endforeach ?>
                           </select>
                         </td>
-                        <td><input type="text" name="qty[]" id="qty_<?php echo $x; ?>" class="form-control" required
-                            onkeyup="getTotal(<?php echo $x; ?>)" value="<?php echo $val['qty'] ?>" autocomplete="off"></td>
+                        <td><input type="number" name="qty[]" id="qty_<?php echo $x; ?>" class="form-control" required
+                            min="0" max="1000000" onchange="getTotal(<?php echo $x; ?>)" onkeyup="getTotal(<?php echo $x; ?>)" value="<?php echo $val['qty'] ?>" autocomplete="off"></td>
                         <td>
                           <input type="text" name="rate[]" id="rate_<?php echo $x; ?>" class="form-control" disabled
                             value="<?php echo $val['rate'] ?>" autocomplete="off">
@@ -323,7 +337,7 @@
 
           html += '</select>' +
             '</td>' +
-            '<td><input type="number" name="qty[]" id="qty_' + row_id + '" class="form-control" onkeyup="getTotal(' + row_id + ')"></td>' +
+            '<td><input type="number" name="qty[]" id="qty_' + row_id + '" class="form-control" min="0" max="1000000" onchange="getTotal(' + row_id + ')" onkeyup="getTotal(' + row_id + ')"></td>' +
             '<td><input type="text" name="rate[]" id="rate_' + row_id + '" class="form-control" disabled><input type="hidden" name="rate_value[]" id="rate_value_' + row_id + '" class="form-control"></td>' +
             '<td><input type="text" name="amount[]" id="amount_' + row_id + '" class="form-control" disabled><input type="hidden" name="amount_value[]" id="amount_value_' + row_id + '" class="form-control"></td>' +
             '<td><button type="button" class="btn btn-default" onclick="removeRow(\'' + row_id + '\')"><i class="fa fa-close"></i></button></td>' +

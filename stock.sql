@@ -625,8 +625,8 @@ ALTER TABLE `orders`
 --
 -- Indexes for table `orders_item`
 --
-ALTER TABLE `orders_item`
-  ADD PRIMARY KEY (`order_id`);
+-- ALTER TABLE `orders_item`
+--   ADD PRIMARY KEY (`order_id`);
 
 --
 -- Indexes for table `products`
@@ -713,8 +713,8 @@ ALTER TABLE `orders`
 --
 -- AUTO_INCREMENT for table `orders_item`
 --
-ALTER TABLE `orders_item`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT;
+-- ALTER TABLE `orders_item`
+--   MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `products`

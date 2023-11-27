@@ -38,8 +38,8 @@
             <thead>
               <tr>
 
-                <th>id</th>
-                <th>Order ID</th>
+                <th>Transaction No.</th>
+                <!-- <th>Order ID</th> -->
                 <th>Product Name</th>
                 <th>Amount</th>
                 <th>Rate</th>

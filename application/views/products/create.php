@@ -62,8 +62,8 @@
                 </div>
 
                 <div class="form-group">
-                  <label for="sku">SKU</label>
-                  <input type="text" class="form-control" id="sku" name="sku" placeholder="Enter sku" autocomplete="off" />
+                  <label for="sku">Product Code</label>
+                  <input type="text" class="form-control" id="sku" name="sku" placeholder="Enter Product Code" autocomplete="off" />
                 </div>
 
                 <div class="form-group">
@@ -73,7 +73,7 @@
 
                 <div class="form-group">
                   <label for="qty">Qty</label>
-                  <input type="number" min='0' max="5000" class="form-control" id="qty" name="qty" placeholder="Enter Qty" autocomplete="off" />
+                  <input type="number" min='1' max="1000000" class="form-control" id="qty" name="qty" placeholder="Enter Qty" autocomplete="off" />
                 </div>
 
                 <div class="form-group">
@@ -83,7 +83,7 @@
                   </textarea>
                 </div>
 
-                <?php if($attributes): ?>
+                <!-- <?php if($attributes): ?>
                   <?php foreach ($attributes as $k => $v): ?>
                     <div class="form-group">
                       <label for="groups"><?php echo $v['attribute_data']['name'] ?></label>
@@ -112,7 +112,7 @@
                       <option value="<?php echo $v['id'] ?>"><?php echo $v['name'] ?></option>
                     <?php endforeach ?>
                   </select>
-                </div>
+                </div> -->
 
                 <div class="form-group">
                   <label for="store">Store</label>

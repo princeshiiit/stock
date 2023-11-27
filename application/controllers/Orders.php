@@ -286,7 +286,7 @@ class Orders extends Admin_Controller
 
 			$result['data'][$key] = array(
 				$value['order_id'],
-				$value['id'],
+				// $value['id'],
 				$value['product_name'],
 				$value['amount'],
 				$value['rate'],

@@ -40,6 +40,25 @@
             <h3 class="box-title">Add Order</h3>
           </div>
 
+          <?php
+// Assuming you have a database connection established
+
+// Your SQL query to get the next ID
+$link = mysqli_connect("localhost", "root", "", "stock");
+$query = "SELECT COALESCE(MAX(id), 0) + 1 AS next_id FROM orders";
+$result = mysqli_query($link, $query);
+
+// Fetch the result
+$row = mysqli_fetch_assoc($result);
+$nextId = $row['next_id'];
+?>
+
+<!-- Your HTML -->
+<div class="box-header">
+    <h3 class="box-title">Transaction No. :</h3>
+    <h3 class="box-title"><?php echo $nextId; ?></h3> <!-- display here-->
+</div>
+
 
 
 
@@ -221,7 +240,7 @@
                         <?php endforeach ?>
                       </select>
                     </td>
-                    <td><input type="text" name="qty[]" id="qty_1" class="form-control" required onkeyup="getTotal(1)">
+                    <td><input type="number" name="qty[]" id="qty_1" class="form-control" required min="0" max="10000000" onchange="getTotal(1)" onkeyup="getTotal(1)">
                     </td>
                     <td>
                       <input type="text" name="rate[]" id="rate_1" class="form-control" disabled autocomplete="off">
@@ -375,7 +394,7 @@
 
           html += '</select>' +
             '</td>' +
-            '<td><input type="number" name="qty[]" id="qty_' + row_id + '" class="form-control" onkeyup="getTotal(' + row_id + ')"></td>' +
+            '<td><input type="number" name="qty[]" id="qty_' + row_id + '" class="form-control" min="0" max="10000000" onchange="getTotal('+ row_id + ')" onkeyup="getTotal(' + row_id + ')"></td>' +
             '<td><input type="text" name="rate[]" id="rate_' + row_id + '" class="form-control" disabled><input type="hidden" name="rate_value[]" id="rate_value_' + row_id + '" class="form-control"></td>' +
             '<td><input type="text" name="amount[]" id="amount_' + row_id + '" class="form-control" disabled><input type="hidden" name="amount_value[]" id="amount_value_' + row_id + '" class="form-control"></td>' +
             '<td><button type="button" class="btn btn-default" onclick="removeRow(\'' + row_id + '\')"><i class="fa fa-close"></i></button></td>' +

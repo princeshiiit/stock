@@ -32,8 +32,7 @@
 
         </ul>
       </li>
-      <?php if ($user_permission): ?>
-        <?php if (in_array('deleteOrder', $user_permission)): ?>
+      
           <li class="treeview" id="mainGroupNav">
             <a href="#">
               <i class="fa fa-files-o"></i>
@@ -50,8 +49,6 @@
 
             </ul>
           </li>
-        <?php endif; ?>
-      <?php endif; ?>
 
 
 
