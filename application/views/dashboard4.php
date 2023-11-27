@@ -55,74 +55,85 @@
           $row = mysqli_fetch_array($result);
   
           $hash_password = password_verify($password, $row['password']);
-          if ($hash_password === true) {
-            if ($id != null || $id != "") {
-              $prod = mysqli_query($conn, "SELECT * FROM orders_item WHERE order_id=$id");
-      
-              $num_results = mysqli_num_rows($prod);
-              for ($i = 0; $i < $num_results; $i++) {
-                $row = mysqli_fetch_array($prod);
-                // $id_prod = $row['product_id'];
-                // $qty_back = $row['qty'];
-          
-                $idvoid = $row['id'];
-                $orderId = $row['order_id'];
-                $id_prod = $row['product_id'];
-                $qty_back = $row['qty'];
-                $rate = $row['rate'];
-                $amount = $row['amount'];
-                $slot = $row['slot'];
-                $staff = $row['staff'];
-                $dateTime = $row['date_time'];
-                $prodName = $row['product_name'];
-                // $voided_date = strtotime(date('Y-m-d H:i:s'));
-          
-                $test = mysqli_query($conn, "INSERT INTO `voided_orders_item`(`id`, `order_id`, `product_id`, `qty`, `rate`, `amount`, `slot`, `staff`, `date_time`, `product_name`) VALUES ('$idvoid','$orderId','$id_prod','$qty_back','$rate','$amount','$slot','$staff','$dateTime','$prodName')");
-                // $row = mysqli_fetch_array($test);
-          
-      
-                // back the used qty
-                $res = mysqli_query($conn, "SELECT * FROM products WHERE `id`='$id_prod'");
-                $resprod = mysqli_fetch_array($res);
-      
-                $curQty = $resprod['qty'];
-                $curQtyUsed = $resprod['qty_used'];
-      
-      
-      
-                $newQty = $curQty + $qty_back;
-                $newQtyUsed = $curQtyUsed - $qty_back;
-      
-      
-                $response = mysqli_query($conn, "SELECT * FROM machine WHERE `prod_id`='$id_prod'");
-                $resmachine = mysqli_fetch_array($response);
-                $curMachQty = $resmachine['prod_qty'];
-      
-                $newMachQty = $curMachQty - $qty_back;
-      
-      
-                mysqli_query($conn, "UPDATE products SET `qty`='$newQty', `qty_used`='$newQtyUsed' WHERE `id`='$id_prod'");
-                mysqli_query($conn, "UPDATE machine SET `prod_qty`='$newMachQty' WHERE `prod_id`='$id_prod'");
-      
-      
-                //UPDATE machine SET `prod_qty`=prod_qty+$newval WHERE prod_id='$test'
-          
-              }
-      
-              $insert = mysqli_query($conn, "DELETE FROM orders_item WHERE `order_id` = '$id'");
-              $insert = mysqli_query($conn, "DELETE FROM orders WHERE `id` = '$id'");
-      
-              if (!$insert) {
-                echo mysqli_error();
-              } else {
-                // echo "Records added successfully.";
-              }
-            }
+          //get user_id
+          //check if 6 or 1
+          // proceed
+          $rowUserId = $row['id'];
+          $adminCheck = mysqli_query($link, "SELECT * FROM user_group WHERE user_id='$rowUserId'");
+          $adminCheckRow = mysqli_fetch_array($adminCheck);
+          if($adminCheckRow['group_id'] == "6" || $adminCheckRow['group_id'] == "1") {
+            if ($hash_password === true) {
+              if ($id != null || $id != "") {
+                $prod = mysqli_query($conn, "SELECT * FROM orders_item WHERE order_id=$id");
+        
+                $num_results = mysqli_num_rows($prod);
+                for ($i = 0; $i < $num_results; $i++) {
+                  $row = mysqli_fetch_array($prod);
+                  // $id_prod = $row['product_id'];
+                  // $qty_back = $row['qty'];
             
+                  $idvoid = $row['id'];
+                  $orderId = $row['order_id'];
+                  $id_prod = $row['product_id'];
+                  $qty_back = $row['qty'];
+                  $rate = $row['rate'];
+                  $amount = $row['amount'];
+                  $slot = $row['slot'];
+                  $staff = $row['staff'];
+                  $dateTime = $row['date_time'];
+                  $prodName = $row['product_name'];
+                  // $voided_date = strtotime(date('Y-m-d H:i:s'));
+            
+                  $test = mysqli_query($conn, "INSERT INTO `voided_orders_item`(`id`, `order_id`, `product_id`, `qty`, `rate`, `amount`, `slot`, `staff`, `date_time`, `product_name`) VALUES ('$idvoid','$orderId','$id_prod','$qty_back','$rate','$amount','$slot','$staff','$dateTime','$prodName')");
+                  // $row = mysqli_fetch_array($test);
+            
+        
+                  // back the used qty
+                  $res = mysqli_query($conn, "SELECT * FROM products WHERE `id`='$id_prod'");
+                  $resprod = mysqli_fetch_array($res);
+        
+                  $curQty = $resprod['qty'];
+                  $curQtyUsed = $resprod['qty_used'];
+        
+        
+        
+                  $newQty = $curQty + $qty_back;
+                  $newQtyUsed = $curQtyUsed - $qty_back;
+        
+        
+                  $response = mysqli_query($conn, "SELECT * FROM machine WHERE `prod_id`='$id_prod'");
+                  $resmachine = mysqli_fetch_array($response);
+                  $curMachQty = $resmachine['prod_qty'];
+        
+                  $newMachQty = $curMachQty - $qty_back;
+        
+        
+                  mysqli_query($conn, "UPDATE products SET `qty`='$newQty', `qty_used`='$newQtyUsed' WHERE `id`='$id_prod'");
+                  mysqli_query($conn, "UPDATE machine SET `prod_qty`='$newMachQty' WHERE `prod_id`='$id_prod'");
+        
+        
+                  //UPDATE machine SET `prod_qty`=prod_qty+$newval WHERE prod_id='$test'
+            
+                }
+        
+                $insert = mysqli_query($conn, "DELETE FROM orders_item WHERE `order_id` = '$id'");
+                $insert = mysqli_query($conn, "DELETE FROM orders WHERE `id` = '$id'");
+        
+                if (!$insert) {
+                  echo mysqli_error();
+                } else {
+                  // echo "Records added successfully.";
+                }
+              }
+            } else {
+              $message = "Invalid Supervisor Credentials!";
+              echo "<script>alert('$message');</script>";
+            }
           } else {
-            $message = "Invalid Supervisor Credentials!";
+            $message = "Credentails is not a supervisor!";
             echo "<script>alert('$message');</script>";
           }
+          
         } else {
           $message = "Invalid Supervisor Credentials!";
             echo "<script>alert('$message');</script>";
