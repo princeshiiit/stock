@@ -79,7 +79,7 @@
                   $rate = $row['rate'];
                   $amount = $row['amount'];
                   $slot = $row['slot'];
-                  $staff = $row['staff'];
+                  $staff = $row['Staff'];
                   $dateTime = $row['date_time'];
                   $prodName = $row['product_name'];
                   // $voided_date = strtotime(date('Y-m-d H:i:s'));
