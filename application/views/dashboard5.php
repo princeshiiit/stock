@@ -25,8 +25,10 @@
 
       <!-- /.box-header -->
       <section class="content">
-        <button class="btn btn-success btn-print" onclick="tableToExcel('manageTable1', 'void')"><i
+      <button class="btn btn-success btn-print" onclick="tableToExcel('manageTable1', 'void')"><i
             class="glyphicon glyphicon-arrow-down"></i>Export Voided History</button>
+            <button class="btn btn-success btn-print" onclick="printTable()"><i
+            class="glyphicon glyphicon-print"></i>Print Voided History</button>
 
 
 
@@ -181,6 +183,28 @@
     
   }
 
+</script>
+<script>
+    function printTable() {
+        // // Target the specific table by its id
+        // var table = document.getElementById('manageTable1');
+
+        // // Check if the table exists before printing
+        // if (table) {
+        //     // Use the browser's print functionality
+        //     window.print();
+        // } else {
+        //     alert('Table not found.');
+        // }
+
+        var printContents = document.getElementById('manageTable1').outerHTML;
+        var printWindow = window.open('', '_blank');
+        printWindow.document.write('<html><head><title>Print Table Content</title></head><body>');
+        printWindow.document.write(printContents);
+        printWindow.document.write('</body></html>');
+        printWindow.document.close();
+        printWindow.print();
+    }
 </script>
 <script type="text/javascript">
   var manageTable;
